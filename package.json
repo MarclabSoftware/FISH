@@ -1,0 +1,37 @@
+{
+  "name": "@marclabsoftware/fish",
+  "version": "0.0.0",
+  "description": "FISH - Free Integration for Smart Home",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarclabSoftware/FISH.git"
+  },
+  "keywords": [
+    "smarthome",
+    "smart",
+    "home",
+    "fish",
+    "integration",
+    "google",
+    "googlehome"
+  ],
+  "author": "Marclab Software",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/MarclabSoftware/FISH/issues"
+  },
+  "homepage": "https://github.com/MarclabSoftware/FISH#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1"
+  }
+}
