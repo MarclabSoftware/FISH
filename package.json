@@ -1,37 +1,44 @@
 {
   "name": "@marclabsoftware/fish",
-  "version": "0.0.0",
   "description": "FISH - Free Integration for Smart Home",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.0.0",
+  "author": "Marclab Software",
+  "bugs": "https://github.com/MarclabSoftware/FISH/issues",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "husky": "^7.0.0",
+    "semantic-release": "^19.0.2",
+    "syncpack": "^6.2.0"
   },
   "engines": {
     "node": ">=16",
     "pnpm": ">=5"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MarclabSoftware/FISH.git"
-  },
-  "keywords": [
-    "smarthome",
-    "smart",
-    "home",
-    "fish",
-    "integration",
-    "google",
-    "googlehome"
-  ],
-  "author": "Marclab Software",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/MarclabSoftware/FISH/issues"
-  },
   "homepage": "https://github.com/MarclabSoftware/FISH#readme",
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1"
+  "keywords": [
+    "fish",
+    "google",
+    "googlehome",
+    "home",
+    "integration",
+    "smart",
+    "smarthome"
+  ],
+  "license": "GPL-3.0-or-later",
+  "main": "index.js",
+  "repository": "MarclabSoftware/FISH.git",
+  "scripts": {
+    "husky:precommit": "pnpm run syncpack:format && pnpm run --filter {packages} husky:precommit",
+    "i:all": "pnpm run install:all",
+    "install:all": "pnpm i && pnpm --filter {packages} i",
+    "preinstall": "npx only-allow pnpm",
+    "preinstall:all": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "run:func": "pnpm run --filter {packages/func} --",
+    "syncpack": "syncpack",
+    "syncpack:format": "syncpack format",
+    "watch": "pnpm run --filter {packages} watch"
   }
 }
