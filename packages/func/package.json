@@ -1,12 +1,43 @@
 {
   "name": "@marclabsoftware/fish-func",
-  "version": "0.0.0",
   "description": "FISH - Free Integration for Smart Home - Cloud Functions",
+  "version": "0.0.0",
+  "author": "Marclab Software",
+  "bugs": "https://github.com/MarclabSoftware/FISH/issues",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^2.1.1",
+    "escape-html": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^14.11.2",
+    "concurrently": "^7.0.0",
+    "gts": "^3.1.0",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=5"
+  },
+  "homepage": "https://github.com/MarclabSoftware/FISH#readme",
+  "keywords": [
+    "fish",
+    "google",
+    "googlehome",
+    "home",
+    "integration",
+    "smart",
+    "smarthome"
+  ],
+  "license": "GPL-3.0-or-later",
   "main": "index.js",
+  "repository": "MarclabSoftware/FISH.git",
   "scripts": {
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
+    "husky:precommit": "pnpm run fix",
     "lint": "gts lint",
     "posttest": "pnpm run lint",
     "prepare": "pnpm run compile",
@@ -15,40 +46,5 @@
     "watch": "concurrently -n watch: \"npm:watch:*\"",
     "watch:compile": "pnpm run compile -- -w",
     "watch:start": "nodemon --watch ./build/ --exec npm run start"
-  },
-  "engines": {
-    "node": ">=16",
-    "pnpm": ">=5"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MarclabSoftware/FISH.git"
-  },
-  "keywords": [
-    "smarthome",
-    "smart",
-    "home",
-    "fish",
-    "integration",
-    "google",
-    "googlehome"
-  ],
-  "author": "Marclab Software",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/MarclabSoftware/FISH/issues"
-  },
-  "homepage": "https://github.com/MarclabSoftware/FISH#readme",
-  "dependencies": {
-    "@google-cloud/functions-framework": "^2.1.1",
-    "escape-html": "^1.0.3"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.13",
-    "concurrently": "^7.0.0",
-    "nodemon": "^2.0.15",
-    "gts": "^3.1.0",
-    "typescript": "^4.0.3",
-    "@types/node": "^14.11.2"
   }
 }
