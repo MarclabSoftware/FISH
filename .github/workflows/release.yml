@@ -2,9 +2,9 @@ name: build-win
 
 on:
   push:
-    branches: [main, beta]
+    branches: [main, beta, alpha]
   pull_request:
-    branches: [main, beta]
+    branches: [main, beta, alpha]
 
 jobs:
   build:
