@@ -4,7 +4,7 @@ FISH - Free Intergration for Smart Home by Marclab Software
 
 ## Development
 
-### Getting started
+### Getting started with Google Actions for Smarthome
 
 See [this codelab](https://developers.google.com/codelabs/smarthome-washer) from Google to grasp
 the basic concepts behind Google Smarthome Actions.
@@ -32,3 +32,8 @@ e.g.
 ```bash
 pnpm run:func lint
 ```
+
+Also note that each package has its own readme for development/technical documentation, direct
+links here:
+
+- [func README](packages/func/README.md)

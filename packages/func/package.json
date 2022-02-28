@@ -47,8 +47,10 @@
     "prepare": "pnpm run compile",
     "pretest": "pnpm run compile",
     "start": "functions-framework --source=build/src/local-index.js --target=localIndex",
+    "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNC_TUNNEL_SUBDOM",
     "watch": "concurrently -n watch: \"pnpm:watch:*\"",
     "watch:compile": "pnpm run compile -- -w",
-    "watch:start": "nodemon --watch ./build/ --exec npm run start"
+    "watch:start": "nodemon --watch ./build/ --exec pnpm run start",
+    "watch:tunnel": "nodemon --watch ./build/ --exec pnpm run tunnel"
   }
 }

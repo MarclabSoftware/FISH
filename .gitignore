@@ -105,3 +105,4 @@ dist
 
 # -- Package: func
 /packages/func/build
+/packages/func/envs/local.env
