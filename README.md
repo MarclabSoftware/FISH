@@ -4,6 +4,11 @@ FISH - Free Intergration for Smart Home by Marclab Software
 
 ## Development
 
+### Getting started
+
+See [this codelab](https://developers.google.com/codelabs/smarthome-washer) from Google to grasp
+the basic concepts behind Google Smarthome Actions.
+
 ### Requirements
 
 You must have:

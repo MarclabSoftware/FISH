@@ -6,13 +6,17 @@
   "bugs": "https://github.com/MarclabSoftware/FISH/issues",
   "dependencies": {
     "@google-cloud/functions-framework": "^2.1.1",
+    "actions-on-google": "^3.0.0",
     "escape-html": "^1.0.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@types/node": "^14.11.2",
+    "@types/node": "^14.18.11",
     "concurrently": "^7.0.0",
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^5.0.0",
     "gts": "^3.1.0",
+    "localtunnel": "^2.0.2",
     "nodemon": "^2.0.15",
     "typescript": "^4.0.3"
   },
@@ -43,7 +47,7 @@
     "prepare": "pnpm run compile",
     "pretest": "pnpm run compile",
     "start": "functions-framework --source=build/src/local-index.js --target=localIndex",
-    "watch": "concurrently -n watch: \"npm:watch:*\"",
+    "watch": "concurrently -n watch: \"pnpm:watch:*\"",
     "watch:compile": "pnpm run compile -- -w",
     "watch:start": "nodemon --watch ./build/ --exec npm run start"
   }
