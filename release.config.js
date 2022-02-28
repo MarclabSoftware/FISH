@@ -1,4 +1,7 @@
-module.exports = {
+const ref = process.env.GITHUB_REF;
+const branch = ref.split("/").pop();
+
+const config = {
   branches: [
     "+([0-9])?(.{+([0-9]),x}).x",
     "main",
@@ -14,20 +17,27 @@ module.exports = {
   plugins: [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    [
-      "@semantic-release/changelog",
-      {
-        changelogFile: "docs/CHANGELOG.md",
-      },
-    ],
-    [
-      "@semantic-release/git",
-      {
-        assets: ["docs"],
-        message:
-          "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
-      },
-    ],
-    "@semantic-release/github",
   ],
 };
+
+config.plugins.push([
+  "@semantic-release/changelog",
+  {
+    changelogFile: `docs/CHANGELOG-${branch}.md`,
+  },
+]);
+
+config.plugins.push([
+  "@semantic-release/git",
+  {
+    assets: ["docs"],
+    message:
+      "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
+  },
+]);
+
+if (branch != "alpha") {
+  config.plugins.push("@semantic-release/github");
+}
+
+module.exports = config;
