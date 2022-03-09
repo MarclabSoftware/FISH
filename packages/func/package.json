@@ -7,11 +7,16 @@
   "dependencies": {
     "@google-cloud/functions-framework": "^2.1.1",
     "actions-on-google": "^3.0.0",
-    "escape-html": "^1.0.3"
+    "escape-html": "^1.0.3",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "oidc-provider": "^7.10.6",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^14.18.11",
+    "@types/oidc-provider": "^7.8.2",
     "concurrently": "^7.0.0",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^5.0.0",
@@ -40,13 +45,15 @@
   "scripts": {
     "clean": "gts clean",
     "compile": "tsc",
+    "deploy": "concurrently -m1 -n deploy: \"pnpm:deploy:*\"",
+    "deploy:hello-world": "dotenv -e envs/local.env -e envs/dev.env -- gcloud functions deploy hello-world --entry-point build/src/functions/hello-world/hello-world.js --runtime nodejs16",
     "fix": "gts fix",
     "husky:precommit": "pnpm run fix",
     "lint": "gts lint",
     "posttest": "pnpm run lint",
     "prepare": "pnpm run compile",
     "pretest": "pnpm run compile",
-    "start": "functions-framework --source=build/src/local-index.js --target=localIndex",
+    "start": "npx --node-options=\"--inspect\" functions-framework --source=build/src/local-index.js --target=localIndex",
     "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNC_TUNNEL_SUBDOM",
     "watch": "concurrently -n watch: \"pnpm:watch:*\"",
     "watch:compile": "pnpm run compile -- -w",
