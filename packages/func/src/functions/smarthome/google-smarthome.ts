@@ -1,5 +1,8 @@
+import {
+  SmartHomeV1SyncResponse,
+  smarthome as gSmarthome,
+} from 'actions-on-google';
 import {HttpFunction} from '@google-cloud/functions-framework';
-import {smarthome as gSmarthome} from 'actions-on-google';
 
 const smarthomeApp = gSmarthome();
 
@@ -12,7 +15,7 @@ smarthomeApp.onSync(async (body, headers) => {
       agentUserId: userId,
       devices: [],
     },
-  };
+  } as SmartHomeV1SyncResponse;
 
   return syncResponse;
 });
