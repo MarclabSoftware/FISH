@@ -8,6 +8,7 @@
     "inversify": "^6.0.1"
   },
   "devDependencies": {
+    "eslint": "^8.10.0",
     "gts": "^3.1.0",
     "typescript": "^4.6.2"
   },
@@ -29,7 +30,8 @@
   "main": "build/src/index.js",
   "repository": "git@github.com:MarclabSoftware/FISH.git",
   "scripts": {
-    "husky:precommit": "echo TBD",
-    "compile": "tsc"
+    "compile": "tsc",
+    "fix": "gts fix",
+    "husky:precommit": "yarn run fix"
   }
 }

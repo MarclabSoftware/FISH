@@ -28,7 +28,7 @@
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0",
     "tsc-watch": "^4.6.1",
-    "typescript": "^4.6.0"
+    "typescript": "^4.6.2"
   },
   "engines": {
     "node": ">=16",

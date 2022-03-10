@@ -40,6 +40,7 @@
     "prepare": "husky install",
     "run:func": "yarn workspace @marclabsoftware/fish-func",
     "syncpack": "syncpack list-mismatches",
+    "syncpack:fix": "syncpack fix-mismatches",
     "syncpack:format": "syncpack format"
   },
   "workspaces": [
