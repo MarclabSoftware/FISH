@@ -1,5 +1,5 @@
 module.exports = {
-  extends: './node_modules/gts/',
+  extends: '../node_modules/gts/',
   rules: {
     'prettier/prettier': [
       'error',

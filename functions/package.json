@@ -7,7 +7,9 @@
   "dependencies": {
     "@google-cloud/functions-framework": "^2.1.1",
     "actions-on-google": "^3.0.0",
+    "body-parser": "^1.19.2",
     "escape-html": "^1.0.3",
+    "express": "^4.17.3",
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "oidc-provider": "^7.10.6",
@@ -20,14 +22,17 @@
     "concurrently": "^7.0.0",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^5.0.0",
+    "eslint": "^8.10.0",
     "gts": "^3.1.0",
     "localtunnel": "^2.0.2",
     "nodemon": "^2.0.15",
-    "typescript": "^4.0.3"
+    "ts-node": "^10.7.0",
+    "tsc-watch": "^4.6.1",
+    "typescript": "^4.6.0"
   },
   "engines": {
     "node": ">=16",
-    "pnpm": ">=5"
+    "yarn": ">=1"
   },
   "homepage": "https://github.com/MarclabSoftware/FISH#readme",
   "keywords": [
@@ -40,24 +45,22 @@
     "smarthome"
   ],
   "license": "GPL-3.0-or-later",
-  "main": "index.js",
-  "repository": "MarclabSoftware/FISH.git",
+  "main": "build/src/index.js",
+  "repository": "git@github.com:MarclabSoftware/FISH.git",
   "scripts": {
     "clean": "gts clean",
     "compile": "tsc",
-    "deploy": "concurrently -m1 -n deploy: \"pnpm:deploy:*\"",
-    "deploy:hello-world": "dotenv -e envs/local.env -e envs/dev.env -- gcloud functions deploy hello-world --entry-point build/src/functions/hello-world/hello-world.js --runtime nodejs16",
+    "deploy": "concurrently -m1 -n deploy: \"yarn:deploy:*\"",
+    "deploy:hello-world": "dotenv -e envs/local.env -e envs/dev.env -- gcloud functions deploy hello-world --region=europe-west1 --entry-point helloWorld --runtime nodejs16 --trigger-http",
     "fix": "gts fix",
-    "husky:precommit": "pnpm run fix",
+    "husky:precommit": "yarn run fix",
     "lint": "gts lint",
-    "posttest": "pnpm run lint",
-    "prepare": "pnpm run compile",
-    "pretest": "pnpm run compile",
-    "start": "npx --node-options=\"--inspect\" functions-framework --source=build/src/local-index.js --target=localIndex",
+    "postcompile": "npx tsc-alias",
+    "start": "npx --node-options=\"--inspect\" functions-framework --source=build/functions/src/local-index.js --target=localIndex",
     "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNC_TUNNEL_SUBDOM",
-    "watch": "concurrently -n watch: \"pnpm:watch:*\"",
-    "watch:compile": "pnpm run compile -- -w",
-    "watch:start": "nodemon --watch ./build/ --exec pnpm run start",
-    "watch:tunnel": "nodemon --watch ./build/ --exec pnpm run tunnel"
+    "watch": "concurrently --kill-others -n watch: -c \"bgBlue.bold,bgRed.bold,bgGreen.bold\" \"yarn:watch:*\"",
+    "watch:compile": "tsc-watch --onSuccess \"yarn compile\"",
+    "watch:start": "nodemon --watch ./build/ --exec yarn start",
+    "watch:tunnel": "nodemon --watch ./build/ --exec yarn tunnel"
   }
 }

@@ -6,6 +6,16 @@ export const login: HttpFunction = (req, res) => {
     res.send(`
      <html>
        <meta name="viewport" content="width=device-width, initial-scale=1">
+       <head>
+        <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
+        <script>
+          var config = {
+            apiKey: "AIzaSyAT7D3t69YC8E7g_yZ5l-pImy1kWLBaJlY",
+            authDomain: "marcuson-smart-home.firebaseapp.com",
+          };
+          firebase.initializeApp(config);
+        </script>
+       </head>
        <body>
          <form action="/oauth/login" method="post">
            <input type="hidden"

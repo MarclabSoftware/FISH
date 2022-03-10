@@ -103,6 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# -- Package: func
-/packages/func/build
-/packages/func/envs/local.env
+# -- Workspace: functions
+/functions/build
+/functions/envs/local.env

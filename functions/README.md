@@ -1,6 +1,6 @@
-# FISH
+# FISH - functions
 
-FISH - Free Intergration for Smart Home by Marclab Software
+FISH - Google Cloud Functions
 
 ## How to set environment variables
 
