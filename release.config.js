@@ -1,5 +1,5 @@
 const ref = process.env.GITHUB_REF;
-const branch = ref.split("/").pop();
+const branch = ref ? ref.split("/").pop() : "main";
 
 const config = {
   branches: [

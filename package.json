@@ -10,11 +10,12 @@
     "@semantic-release/git": "^10.0.1",
     "husky": "^7.0.0",
     "semantic-release": "^19.0.2",
-    "syncpack": "^6.2.0"
+    "syncpack": "^6.2.0",
+    "tsc-alias": "^1.6.4"
   },
   "engines": {
     "node": ">=16",
-    "pnpm": ">=5"
+    "yarn": ">=1"
   },
   "homepage": "https://github.com/MarclabSoftware/FISH#readme",
   "keywords": [
@@ -27,18 +28,22 @@
     "smarthome"
   ],
   "license": "GPL-3.0-or-later",
-  "main": "index.js",
+  "private": true,
   "repository": "MarclabSoftware/FISH.git",
   "scripts": {
-    "husky:precommit": "pnpm run syncpack:format && pnpm run --filter {packages} husky:precommit",
+    "cli": "ts-node scripts/cli",
+    "husky:precommit": "yarn run syncpack:format && yarn workspaces run husky:precommit",
     "i:all": "pnpm run install:all",
-    "install:all": "pnpm i && pnpm --filter {packages} i",
-    "preinstall": "npx only-allow pnpm",
-    "preinstall:all": "npx only-allow pnpm",
+    "install:all": "yarn install && yarn workspaces foreach install",
+    "preinstall": "npx only-allow yarn",
+    "preinstall:all": "npx only-allow yarn",
     "prepare": "husky install",
-    "run:func": "pnpm run --filter {packages/func} --",
-    "syncpack": "syncpack",
-    "syncpack:format": "syncpack format",
-    "watch": "pnpm run --filter {packages} watch"
-  }
+    "run:func": "yarn workspace @marclabsoftware/fish-func",
+    "syncpack": "syncpack list-mismatches",
+    "syncpack:format": "syncpack format"
+  },
+  "workspaces": [
+    "packages/*",
+    "functions"
+  ]
 }
