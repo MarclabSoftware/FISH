@@ -1,0 +1,35 @@
+{
+  "name": "@marclabsoftware/fish-common",
+  "description": "FISH - Free Integration for Smart Home - Common lib",
+  "version": "0.0.0",
+  "author": "Marclab Software",
+  "bugs": "https://github.com/MarclabSoftware/FISH/issues",
+  "dependencies": {
+    "inversify": "^6.0.1"
+  },
+  "devDependencies": {
+    "gts": "^3.1.0",
+    "typescript": "^4.6.2"
+  },
+  "engines": {
+    "node": ">=16",
+    "yarn": ">=1"
+  },
+  "homepage": "https://github.com/MarclabSoftware/FISH#readme",
+  "keywords": [
+    "fish",
+    "google",
+    "googlehome",
+    "home",
+    "integration",
+    "smart",
+    "smarthome"
+  ],
+  "license": "GPL-3.0-or-later",
+  "main": "build/src/index.js",
+  "repository": "git@github.com:MarclabSoftware/FISH.git",
+  "scripts": {
+    "husky:precommit": "echo TBD",
+    "compile": "tsc"
+  }
+}

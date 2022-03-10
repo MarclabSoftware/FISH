@@ -1,0 +1,16 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build",
+    "types": ["reflect-metadata"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "paths": {
+      "@marclabsoftware/fish-*": ["packages/*"]
+    }
+  },
+  "exclude": ["**/*.test.ts", "node_modules", "dist"]
+}
