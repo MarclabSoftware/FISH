@@ -16,21 +16,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-          
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2.1.0
-        with:
-          version: '6.31.0'
+      
+      - name: Enable corepack
+        run: corepack enable
     
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.1
         with:
           node-version: ${{ matrix.node-version }}
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          cache: yarn
+          cache-dependency-path: yarn.lock
         
       - name: Install dependencies
-        run: pnpm i:all
+        run: yarn install
 
       - name: Release
         env:
