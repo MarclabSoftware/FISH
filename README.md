@@ -1,4 +1,4 @@
-# FISH
+# :fish:FISH
 
 FISH - Free Integration for Smart Home by Marclab Software
 
@@ -33,11 +33,11 @@ yarn run:<package-name> <npm script name here>
 
 e.g.
 
-```bash
+```shell
 yarn run:functions lint
 ```
 
-Also note that each package has its own readme for development/technical documentation, direct
+:information_source:Each package has its own readme for development/technical documentation, direct
 links here:
 
 - [functions README](functions/README.md)
