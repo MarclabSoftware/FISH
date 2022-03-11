@@ -1,5 +1,12 @@
-import {fakeauth, faketoken, login} from './functions/oidc/oauth';
-import {googleSmarthome} from './functions/smarthome/google-smarthome';
-import {helloWorld} from './hello-world/hello-world.func';
+import 'reflect-metadata';
 
-export {helloWorld, login, fakeauth, faketoken, googleSmarthome};
+import {FakeAuthFunc} from './fakeauth/fakeauth.func';
+import {createGCF, registeredGCFs} from './func/utils';
+import {HelloWorldFunc} from './hello-world/hello-world.func';
+import {GoogleSmarthomeFunc} from './smarthome/google-smarthome.func';
+
+const helloWorld = createGCF<HelloWorldFunc>(HelloWorldFunc);
+const googleSmarthome = createGCF<GoogleSmarthomeFunc>(GoogleSmarthomeFunc);
+const fakeAuth = createGCF<FakeAuthFunc>(FakeAuthFunc);
+
+export {registeredGCFs, helloWorld, googleSmarthome, fakeAuth};

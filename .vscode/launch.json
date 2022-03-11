@@ -7,10 +7,10 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Debug func",
+      "name": "Debug GCF",
       "port": 9229,
       "outFiles": [
-        "${workspaceFolder}/packages/func/build/**/*.js",
+        "${workspaceFolder}/functions/build/**/*.js",
         "!**/node_modules/**"
       ]
     }

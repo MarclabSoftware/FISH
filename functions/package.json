@@ -60,7 +60,7 @@
     "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNC_TUNNEL_SUBDOM",
     "watch": "concurrently --kill-others -n watch: -c \"bgBlue.bold,bgRed.bold,bgGreen.bold\" \"yarn:watch:*\"",
     "watch:compile": "tsc-watch --onSuccess \"yarn compile\"",
-    "watch:start": "nodemon --watch ./build/ --exec yarn start",
-    "watch:tunnel": "nodemon --watch ./build/ --exec yarn tunnel"
+    "watch:start": "nodemon --watch ./build/ --delay 2 --exec yarn start",
+    "watch:tunnel": "nodemon --watch ./build/ --delay 2 --exec yarn tunnel"
   }
 }
