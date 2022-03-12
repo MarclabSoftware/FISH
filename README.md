@@ -32,7 +32,6 @@ If you want to run npm scripts for a specific package from the root folder, you 
 yarn workspace <package-name> <npm script name here>
 ```
 
-
 e.g.
 
 ```shell
