@@ -33,8 +33,6 @@
   "scripts": {
     "cli": "ts-node scripts/cli",
     "husky:precommit": "yarn run syncpack:format && yarn workspaces run husky:precommit",
-    "i:all": "pnpm run install:all",
-    "install:all": "yarn install && yarn workspaces foreach install",
     "preinstall": "npx only-allow yarn",
     "preinstall:all": "npx only-allow yarn",
     "prepare": "husky install",
