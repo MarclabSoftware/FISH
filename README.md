@@ -1,6 +1,6 @@
 # :fish:FISH
 
-FISH - Free Integration for Smart Home by Marclab Software
+FISH - Free Integration for Smart Homes by Marclab Software
 
 ## Development
 
