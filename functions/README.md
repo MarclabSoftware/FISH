@@ -1,6 +1,6 @@
-# :fish:FISH - functions
+# :fish:FISH - Google Cloud Functions
 
-FISH - Free Integration for Smart Homes by Marclab Software - Google Cloud Functions
+FISH - Free Integration for Smart Homes by Marclab Software
 
 ## Guide / How to
 
