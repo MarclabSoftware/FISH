@@ -32,10 +32,20 @@ If you want to run npm scripts for a specific package from the root folder, you 
 yarn workspace <package-name> <npm script name here>
 ```
 
+
 e.g.
 
 ```shell
-yarn workspace @marclabsoftware/fish-func run lint
+yarn workspace @marclabsoftware/fish-functions run lint
+yarn workspace @marclabsoftware/fish-common run fix
+```
+
+:information_source: Yoy can also use a shorthand run helper script if registered in the main [package.json](package.json) file
+e.g.
+
+```shell
+yarn run:func lint
+yarn run:comm fix
 ```
 
 :information_source: Each package has its own readme for development/technical documentation, direct

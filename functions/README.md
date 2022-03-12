@@ -28,6 +28,6 @@ developing.
 
 To do so, we are using [localtunnel](https://github.com/localtunnel/localtunnel) via the npm script `tunnel`.
 
-Your functions will be exposed to an URL with this format: `https://${FISH_FUNC_TUNNEL_SUBDOM}.loca.lt`
+Your functions will be exposed to an URL with this format: `https://${FISH_FUNCTIONS_TUNNEL_SUBDOM}.loca.lt`
 
-:exclamation:Please note: you should set the `FISH_FUNC_TUNNEL_SUBDOM` env var to something unique (`fish-[some random alphanumeric chars]` is a good choice), otherwise localtunnel could not be able to function properly.
+:exclamation:Please note: you should set the `FISH_FUNCTIONS_TUNNEL_SUBDOM` env var to something unique (`fish-[some random alphanumeric chars]` is a good choice), otherwise localtunnel could not be able to function properly.

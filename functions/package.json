@@ -1,5 +1,5 @@
 {
-  "name": "@marclabsoftware/fish-func",
+  "name": "@marclabsoftware/fish-functions",
   "description": "FISH - Free Integration for Smart Homes - Cloud Functions",
   "version": "0.0.0",
   "author": "Marclab Software",
@@ -57,7 +57,7 @@
     "lint": "gts lint",
     "postcompile": "npx tsc-alias",
     "start": "npx --node-options=\"--inspect\" functions-framework --source=build/functions/src/local-index.js --target=localIndex",
-    "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNC_TUNNEL_SUBDOM",
+    "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNCTIONS_TUNNEL_SUBDOM",
     "watch": "concurrently --kill-others -n watch: -c \"bgBlue.bold,bgRed.bold,bgGreen.bold\" \"yarn:watch:*\"",
     "watch:compile": "tsc-watch --onSuccess \"yarn compile\"",
     "watch:start": "nodemon --watch ./build/ --delay 2 --exec yarn start",

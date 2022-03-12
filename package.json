@@ -36,7 +36,8 @@
     "preinstall": "npx only-allow yarn",
     "preinstall:all": "npx only-allow yarn",
     "prepare": "husky install",
-    "run:func": "yarn workspace @marclabsoftware/fish-func",
+    "run:func": "yarn workspace @marclabsoftware/fish-functions",
+    "run:comm": "yarn workspace @marclabsoftware/fish-common",
     "syncpack": "syncpack list-mismatches",
     "syncpack:fix": "syncpack fix-mismatches",
     "syncpack:format": "syncpack format"
