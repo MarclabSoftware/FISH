@@ -1,3 +1,13 @@
+# [1.0.0-alpha.3](https://github.com/MarclabSoftware/FISH/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2022-03-14)
+
+
+### Features
+
+* **func:** Add dummy devices for easier developing ([17531d4](https://github.com/MarclabSoftware/FISH/commit/17531d4055fb98f4e68e69cab7846660f5b5291c))
+* **func:** Add responses for smart home intents ([1545032](https://github.com/MarclabSoftware/FISH/commit/1545032b62c26639b508b17cbcd3a48385e6367d))
+* **func:** Add smart device interfaces and a first implementation of an outlet ([af2b66c](https://github.com/MarclabSoftware/FISH/commit/af2b66ca1532d49bda79be5aea0b31dccdf9801e))
+* **func:** Implement responses for smart home intents ([f4c74ba](https://github.com/MarclabSoftware/FISH/commit/f4c74bae0f1d45b1e002e89f6f9e7e3ba100afb0))
+
 # [1.0.0-alpha.2](https://github.com/MarclabSoftware/FISH/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2022-03-11)
 
 
