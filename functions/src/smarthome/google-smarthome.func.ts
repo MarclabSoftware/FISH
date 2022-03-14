@@ -14,12 +14,15 @@ import {
 } from 'actions-on-google';
 import {gcfunc} from '../func/gcfunc.decorator';
 import {BaseHttpController, httpPost} from 'inversify-express-utils';
+import {SmartHomeIntentResponses} from './smarthome-intent-responses';
 
 @gcfunc('google-smarthome')
 export class GoogleSmarthomeFunc extends BaseHttpController {
   constructor() {
     super();
   }
+
+  responses = new SmartHomeIntentResponses();
 
   @httpPost('/')
   private index() {
@@ -31,7 +34,7 @@ export class GoogleSmarthomeFunc extends BaseHttpController {
       return this.badRequest(msg);
     }
 
-    let resp: SmartHomeV1Response;
+    let resp: SmartHomeV1Response = {};
     const input = reqBody.inputs[0];
 
     switch (input.intent) {
@@ -45,38 +48,31 @@ export class GoogleSmarthomeFunc extends BaseHttpController {
         resp = this.onExecute(reqBody as SmartHomeV1ExecuteRequest);
         break;
       case 'action.devices.DISCONNECT':
-        resp = this.onDisconnect(reqBody as SmartHomeV1DisconnectRequest);
+        this.onDisconnect();
+        // This doesn't need response
         break;
       default:
         throw new Error('unsupported intent');
     }
-
+    if (Object.keys(resp).length === 0) {
+      return;
+    }
     return this.httpContext.response.json(resp);
   }
 
   private onSync(body: SmartHomeV1SyncRequest): SmartHomeV1SyncResponse {
-    const userId = '1234';
-
     const resp = {
       requestId: body.requestId,
-      payload: {
-        agentUserId: userId,
-        devices: [],
-      },
+      payload: this.responses.getSyncPayload(),
     } as SmartHomeV1SyncResponse;
 
     return resp;
   }
 
   private onQuery(body: SmartHomeV1QueryRequest): SmartHomeV1QueryResponse {
-    const userId = '1234';
-
     const resp = {
       requestId: body.requestId,
-      payload: {
-        agentUserId: userId,
-        devices: [],
-      },
+      payload: this.responses.getQueryPayload(body.inputs[0].payload),
     } as SmartHomeV1QueryResponse;
 
     return resp;
@@ -87,25 +83,11 @@ export class GoogleSmarthomeFunc extends BaseHttpController {
   ): SmartHomeV1ExecuteResponse {
     const resp = {
       requestId: body.requestId,
-      payload: {
-        commands: [],
-      },
+      payload: this.responses.getExecutePayload(body.inputs[0].payload),
     } as SmartHomeV1ExecuteResponse;
 
     return resp;
   }
 
-  private onDisconnect(body: SmartHomeV1DisconnectRequest) {
-    const userId = '1234';
-
-    const resp = {
-      requestId: body.requestId,
-      payload: {
-        agentUserId: userId,
-        devices: [],
-      },
-    } as SmartHomeV1DisconnectResponse;
-
-    return resp;
-  }
+  private onDisconnect() {}
 }

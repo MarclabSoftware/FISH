@@ -13,7 +13,7 @@ import {ISmartHomeDeviceGeneric} from './i-smarthome-devices';
 import {agentUserId, dummyDevices} from './dummy-devices';
 
 @injectable()
-class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
+export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
   getSyncPayload(): SmartHomeV1SyncPayload {
     const responseDevices: SmartHomeV1SyncDevices[] = [];
     dummyDevices.forEach(device => {
