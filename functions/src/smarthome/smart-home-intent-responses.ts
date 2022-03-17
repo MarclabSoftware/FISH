@@ -9,8 +9,8 @@ import {
   SmartHomeV1ExecuteResponseCommands,
 } from 'actions-on-google';
 import {ISmartHomeIntentResponses} from './i-smarthome-intent-responses';
-import {ISmartHomeDeviceGeneric} from './i-smarthome-devices';
-import {agentUserId, dummyDevices} from './dummy-devices';
+import {SmartHomeDeviceGeneric} from './devices/smart-home-device-generic';
+import {agentUserId, dummyDevices} from './devices/dummy-devices';
 
 @injectable()
 export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
@@ -56,7 +56,7 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
         devicesResponse[queryDeviceId].errorCode = 'DeviceIDnotFound';
       } else {
         devicesResponse[queryDeviceId] = JSON.parse(
-          JSON.stringify(localDevice.getCompleteState())
+          JSON.stringify(localDevice.state)
         ); // FIXME?
         devicesResponse[queryDeviceId].status = 'SUCCESS';
       }
@@ -73,7 +73,7 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     const responsePayload: SmartHomeV1ExecutePayload = {commands: []};
 
     request.commands.forEach(command => {
-      const foundDevices: ISmartHomeDeviceGeneric[] = [];
+      const foundDevices: SmartHomeDeviceGeneric[] = [];
       const missingDevicesIds: string[] = [];
 
       command.devices.forEach(device => {

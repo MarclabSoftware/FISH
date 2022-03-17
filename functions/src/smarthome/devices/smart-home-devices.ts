@@ -1,9 +1,9 @@
-import {ISmartHomeDeviceOutlet} from './i-smarthome-devices';
+import {SmartHomeDeviceGenericOutlet} from './smart-home-device-generic-outlet';
 import {SmartHomeV1ExecuteRequestExecution} from 'actions-on-google';
 import {injectable} from 'inversify';
 
 @injectable()
-export class SmartHomeDeviceOutlet implements ISmartHomeDeviceOutlet {
+export class SmartHomeDeviceOutlet implements SmartHomeDeviceGenericOutlet {
   key: number; // For dummy names/ID
   static lastKey = 0; // For dummy names/ID
 
@@ -19,9 +19,11 @@ export class SmartHomeDeviceOutlet implements ISmartHomeDeviceOutlet {
   model = 'Dummy outlet';
   hwVersion = '1.0';
   swVersion = '0.1';
-  online = true;
 
-  on = false;
+  state = {
+    online: true,
+    on: false,
+  };
 
   constructor() {
     this.key = ++SmartHomeDeviceOutlet.lastKey;
@@ -33,7 +35,7 @@ export class SmartHomeDeviceOutlet implements ISmartHomeDeviceOutlet {
   setState?(execution: SmartHomeV1ExecuteRequestExecution): {} {
     switch (execution.command) {
       case 'action.devices.commands.OnOff':
-        this.on = execution.params?.on || this.on; // FIXME: check this
+        this.state.on = execution.params?.on || this.state.on; // FIXME: check this
         break;
 
       default:
@@ -42,18 +44,11 @@ export class SmartHomeDeviceOutlet implements ISmartHomeDeviceOutlet {
     return this.getCommandState(execution.command); // FIXME: check this
   }
 
-  getCompleteState(): {on: boolean; online: boolean} {
-    return {
-      on: this.on,
-      online: this.online,
-    };
-  }
-
   getTraitState(trait: string): {} {
     switch (trait) {
       case 'action.devices.traits.OnOff':
         return {
-          on: this.on,
+          on: this.state.on,
         };
       default:
         return {}; //FIXME
@@ -64,7 +59,7 @@ export class SmartHomeDeviceOutlet implements ISmartHomeDeviceOutlet {
     switch (command) {
       case 'action.devices.commands.OnOff':
         return {
-          on: this.on,
+          on: this.state.on,
         };
       default:
         return {}; //FIXME
