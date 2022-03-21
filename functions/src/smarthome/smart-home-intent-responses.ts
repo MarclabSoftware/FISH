@@ -111,15 +111,12 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
 
       const executions = command.execution;
 
-      foundDevicesIds.forEach(deviceId => {
+      foundDevicesIds.forEach(id => {
         executions.forEach(execution => {
-            // Don't return back the new state for now
-            
-            device.setState(execution);
-          }
+          //TODO: must apply new state here by calling smart home device utils, how?
         });
         responsePayload.commands[responsePayload.commands.length - 1].ids.push(
-          device.id
+          id
         );
       });
     });

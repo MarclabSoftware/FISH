@@ -1,25 +1,50 @@
 import {SmartHomeV1ExecuteRequestExecution} from 'actions-on-google';
 import {injectable} from 'inversify';
-import {SmartHomeDeviceGeneric} from './smart-home-device-generic';
+import {
+  dummyDevicesList,
+  dummyDevicesMap,
+  agentUserId,
+} from '../dummy-datastore';
 
 @injectable()
 export class SmartHomeDeviceUtils {
-  devices: SmartHomeDeviceGeneric[];
-
-  constructor(devices: SmartHomeDeviceGeneric[]) {
-    this.devices = devices;
-  }
-
   // For execute response, single state
-  getCommandState(id: string, command: string): {} {
-    return {};
+  getStateByCommand(id: string, command: string): {} {
+    switch (command) {
+      case 'action.devices.commands.OnOff':
+        return {
+          on: dummyDevicesMap[id].state.on,
+        };
+      default:
+        return {}; //FIXME
+    }
   }
+
   // May be useful in future
-  getTraitState(id: string, trait: string): {} {
-    return {};
+  getStateByTrait(id: string, trait: string): {} {
+    switch (trait) {
+      case 'action.devices.traits.OnOff':
+        return {
+          on: dummyDevicesMap[id].state.on,
+        };
+      default:
+        return {}; //FIXME
+    }
   }
+
   performExecute(
     id: string,
     execution: SmartHomeV1ExecuteRequestExecution
-  ): void {}
+  ): {} {
+    switch (execution.command) {
+      case 'action.devices.commands.OnOff':
+        dummyDevicesMap[id].state.on =
+          execution.params?.on ?? dummyDevicesMap[id].state.on;
+        break;
+
+      default:
+        break;
+    }
+    return this.getStateByCommand(id, execution.command);
+  }
 }
