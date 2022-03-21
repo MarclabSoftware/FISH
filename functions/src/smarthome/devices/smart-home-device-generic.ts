@@ -1,5 +1,3 @@
-import {SmartHomeV1ExecuteRequestExecution} from 'actions-on-google';
-
 export interface SmartHomeDeviceGeneric {
   id: string;
   type: string;
@@ -17,7 +15,4 @@ export interface SmartHomeDeviceGeneric {
   state: {
     online: boolean;
   };
-  getCommandState?(command: string): {}; // For execute response, single state
-  getTraitState?(trait: string): {}; // May be useful in future
-  setState?(execution: SmartHomeV1ExecuteRequestExecution): void;
 }

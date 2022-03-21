@@ -8,23 +8,28 @@ import {
   SmartHomeV1ExecuteRequestPayload,
   SmartHomeV1ExecuteResponseCommands,
 } from 'actions-on-google';
-import {ISmartHomeIntentResponses} from './i-smarthome-intent-responses';
+import {ISmartHomeIntentResponses} from './i-smart-home-intent-responses';
 import {SmartHomeDeviceGeneric} from './devices/smart-home-device-generic';
-import {agentUserId, dummyDevices} from './devices/dummy-devices';
+import {
+  agentUserId,
+  dummyDevicesList,
+  dummyDevicesMap,
+} from './dummy-datastore';
+import {SmartHomeDeviceUtils} from './devices/smart-home-device-utils';
 
 @injectable()
 export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
   getSyncPayload(): SmartHomeV1SyncPayload {
     const responseDevices: SmartHomeV1SyncDevices[] = [];
-    dummyDevices.forEach(device => {
+    dummyDevicesList.forEach(device => {
       responseDevices.push({
         id: device.id,
         type: device.type,
         traits: device.finalTraits,
         name: {
           name: device.name,
-          defaultNames: device.defaultNames || [],
-          nicknames: device.nickNames || [],
+          defaultNames: device.defaultNames ?? [],
+          nicknames: device.nickNames ?? [],
         },
         willReportState: device.willReportSTate,
         deviceInfo: {
@@ -47,7 +52,8 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     queryDevices.forEach(queryDevice => {
       const queryDeviceId = queryDevice.id;
       devicesResponse[queryDeviceId] = {};
-      const localDevice = dummyDevices.find(
+
+      const localDevice = dummyDevicesList.find(
         dummyDevice => dummyDevice.id === queryDeviceId
       );
       if (localDevice === undefined) {
@@ -57,7 +63,7 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
       } else {
         devicesResponse[queryDeviceId] = JSON.parse(
           JSON.stringify(localDevice.state)
-        ); // FIXME?
+        ); // TODO: check this
         devicesResponse[queryDeviceId].status = 'SUCCESS';
       }
     });
@@ -73,48 +79,42 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     const responsePayload: SmartHomeV1ExecutePayload = {commands: []};
 
     request.commands.forEach(command => {
-      const foundDevices: SmartHomeDeviceGeneric[] = [];
+      const foundDevicesIds: string[] = [];
       const missingDevicesIds: string[] = [];
 
       command.devices.forEach(device => {
         const reqId = device.id;
-        const localDevice = dummyDevices.find(
+        const localDevice = dummyDevicesList.find(
           dummyDevice => dummyDevice.id === reqId
         );
 
+        // Check if the device exists
         if (localDevice === undefined) {
           missingDevicesIds.push(reqId);
         } else {
-          foundDevices.push(localDevice);
+          foundDevicesIds.push(reqId);
         }
       });
+
       // Add missing devices to commands response
       responsePayload.commands.push({
         ids: missingDevicesIds,
         status: 'ERROR',
         errorCode: 'DeviceIDnotFound',
       });
-      // Let's assume everything goes OK for now
+
+      // Add found devices to commands response
       responsePayload.commands.push({
         ids: [],
-        status: 'SUCCESS',
+        status: 'SUCCESS', // TODO: let's assume that requests for found devices will not give problems for now
       });
 
       const executions = command.execution;
 
-      foundDevices.forEach(device => {
+      foundDevicesIds.forEach(deviceId => {
         executions.forEach(execution => {
-          // FIXME: check this...
-          if (device.setState) {
-            // Let's assume everything goes OK for now
-            /*             
-            const newState = device.setState(execution);
-            if (Object.keys(newState).length > 0) { // If it's OK
-              // FIXME
-            } 
-            */
-
             // Don't return back the new state for now
+            
             device.setState(execution);
           }
         });
