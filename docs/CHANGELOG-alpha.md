@@ -1,3 +1,10 @@
+# [1.0.0-alpha.4](https://github.com/MarclabSoftware/FISH/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-03-22)
+
+
+### Features
+
+* **func:** Add smart home device types, error codes, exception codes, traits ([b955cfb](https://github.com/MarclabSoftware/FISH/commit/b955cfb2dc966f6e64ccf5ca455fba2ae845ed58))
+
 # [1.0.0-alpha.3](https://github.com/MarclabSoftware/FISH/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2022-03-14)
 
 
