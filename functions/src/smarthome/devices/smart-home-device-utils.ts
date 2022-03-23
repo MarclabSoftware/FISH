@@ -1,13 +1,27 @@
 import {SmartHomeV1ExecuteRequestExecution} from 'actions-on-google';
 import {injectable} from 'inversify';
+import {SmartHomeDeviceGeneric} from './smart-home-device-generic';
+import {SmartHomeDeviceGenericOnOff} from './smart-home-device-generic-onoff';
 import {
   dummyDevicesList,
   dummyDevicesMap,
   agentUserId,
 } from '../dummy-datastore';
+import { SmartHomeDeviceGenericBrightness } from './smart-home-device-generic-brightness';
 
 @injectable()
 export class SmartHomeDeviceUtils {
+  isOnOffDevice(
+    device: Pick<SmartHomeDeviceGeneric, 'traits'>
+  ): device is SmartHomeDeviceGenericOnOff {
+    return device.traits.includes('action.devices.traits.OnOff');
+  }
+  isBrightnessDevice(
+    device: Pick<SmartHomeDeviceGeneric, 'traits'>
+  ): device is SmartHomeDeviceGenericBrightness {
+    return device.traits.includes('action.devices.traits.Brightness');
+  }
+
   // For execute response, single state
   getStateByCommand(id: string, command: string): {} {
     switch (command) {

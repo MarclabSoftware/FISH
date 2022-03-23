@@ -25,19 +25,14 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
       responseDevices.push({
         id: device.id,
         type: device.type,
-        traits: device.finalTraits,
+        traits: device.traits,
         name: {
-          name: device.name,
-          defaultNames: device.defaultNames ?? [],
-          nicknames: device.nickNames ?? [],
+          name: device.name.name,
+          defaultNames: device.name.defaultNames ?? [],
+          nicknames: device.name.nicknames ?? [],
         },
-        willReportState: device.willReportSTate,
-        deviceInfo: {
-          manufacturer: device.manufacturer,
-          model: device.model,
-          hwVersion: device.hwVersion,
-          swVersion: device.swVersion,
-        },
+        willReportState: device.willReportState,
+        deviceInfo: device.deviceInfo,
       });
     });
     return {agentUserId: agentUserId, devices: responseDevices};
@@ -47,7 +42,7 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     request: SmartHomeV1QueryRequestPayload
   ): SmartHomeV1QueryPayload {
     const queryDevices = request.devices;
-    const devicesResponse: any = {};
+    const devicesResponse: {[key: string]: any} = {};
 
     queryDevices.forEach(queryDevice => {
       const queryDeviceId = queryDevice.id;

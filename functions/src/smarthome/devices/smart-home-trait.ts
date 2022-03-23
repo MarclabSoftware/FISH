@@ -1,6 +1,6 @@
 // Google Smart Home Traits
 // https://developers.google.com/assistant/smarthome/traits
-export type Trait =
+export type SmartHomeTrait =
   | 'action.devices.traits.AppSelector'
   | 'action.devices.traits.ArmDisarm'
   | 'action.devices.traits.Brightness'

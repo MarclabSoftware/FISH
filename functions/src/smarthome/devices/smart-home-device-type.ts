@@ -1,6 +1,6 @@
 // Google Smart Home Device Types
 // https://developers.google.com/assistant/smarthome/guides
-export type DeviceType =
+export type SmartHomeDeviceType =
   | 'action.devices.types.AC_UNIT'
   | 'action.devices.types.AIRCOOLER'
   | 'action.devices.types.AIRFRESHENER'
