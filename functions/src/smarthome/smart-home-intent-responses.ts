@@ -42,11 +42,12 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     request: SmartHomeV1QueryRequestPayload
   ): SmartHomeV1QueryPayload {
     const queryDevices = request.devices;
-    const devicesResponse: {[key: string]: any} = {};
+    const devicesResponse: {
+      [key: string]: {online: boolean; status: string; errorCode?: string};
+    } = {};
 
     queryDevices.forEach(queryDevice => {
       const queryDeviceId = queryDevice.id;
-      devicesResponse[queryDeviceId] = {};
 
       const localDevice = dummyDevicesList.find(
         dummyDevice => dummyDevice.id === queryDeviceId

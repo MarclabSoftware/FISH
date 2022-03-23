@@ -7,7 +7,7 @@ import {
   dummyDevicesMap,
   agentUserId,
 } from '../dummy-datastore';
-import { SmartHomeDeviceGenericBrightness } from './smart-home-device-generic-brightness';
+import {SmartHomeDeviceGenericBrightness} from './smart-home-device-generic-brightness';
 
 @injectable()
 export class SmartHomeDeviceUtils {
@@ -26,9 +26,21 @@ export class SmartHomeDeviceUtils {
   getStateByCommand(id: string, command: string): {} {
     switch (command) {
       case 'action.devices.commands.OnOff':
-        return {
-          on: dummyDevicesMap[id].state.on,
-        };
+        if (this.isOnOffDevice(dummyDevicesMap[id])) {
+          return {
+            on: dummyDevicesMap[id].state.on,
+          };
+        }
+        return {};
+      case 'action.devices.commands.BrightnessAbsolute':
+      case 'action.devices.commands.BrightnessRelative':
+        if (this.isBrightnessDevice(dummyDevicesMap[id])) {
+          return {
+            brightness: dummyDevicesMap[id].state.brightness,
+          };
+        }
+        return {};
+
       default:
         return {}; //FIXME
     }
