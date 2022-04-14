@@ -107,11 +107,11 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
           // FIXME: check this...
           if (device.setState) {
             // Let's assume everything goes OK for now
-            /*             
+            /*
             const newState = device.setState(execution);
             if (Object.keys(newState).length > 0) { // If it's OK
               // FIXME
-            } 
+            }
             */
 
             // Don't return back the new state for now
