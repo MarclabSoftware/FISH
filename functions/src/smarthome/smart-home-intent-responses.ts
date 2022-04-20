@@ -8,31 +8,31 @@ import {
   SmartHomeV1ExecuteRequestPayload,
   SmartHomeV1ExecuteResponseCommands,
 } from 'actions-on-google';
-import {ISmartHomeIntentResponses} from './i-smarthome-intent-responses';
-import {ISmartHomeDeviceGeneric} from './i-smarthome-devices';
-import {agentUserId, dummyDevices} from './dummy-devices';
+import {ISmartHomeIntentResponses} from './i-smart-home-intent-responses';
+import {SmartHomeDeviceGeneric} from './devices/smart-home-device-generic';
+import {
+  agentUserId,
+  dummyDevicesList,
+  dummyDevicesMap,
+} from './dummy-datastore';
+import {SmartHomeDeviceUtils} from './devices/smart-home-device-utils';
 
 @injectable()
 export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
   getSyncPayload(): SmartHomeV1SyncPayload {
     const responseDevices: SmartHomeV1SyncDevices[] = [];
-    dummyDevices.forEach(device => {
+    dummyDevicesList.forEach(device => {
       responseDevices.push({
         id: device.id,
         type: device.type,
-        traits: device.finalTraits,
+        traits: device.traits,
         name: {
-          name: device.name,
-          defaultNames: device.defaultNames || [],
-          nicknames: device.nickNames || [],
+          name: device.name.name,
+          defaultNames: device.name.defaultNames ?? [],
+          nicknames: device.name.nicknames ?? [],
         },
-        willReportState: device.willReportSTate,
-        deviceInfo: {
-          manufacturer: device.manufacturer,
-          model: device.model,
-          hwVersion: device.hwVersion,
-          swVersion: device.swVersion,
-        },
+        willReportState: device.willReportState,
+        deviceInfo: device.deviceInfo,
       });
     });
     return {agentUserId: agentUserId, devices: responseDevices};
@@ -42,12 +42,14 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     request: SmartHomeV1QueryRequestPayload
   ): SmartHomeV1QueryPayload {
     const queryDevices = request.devices;
-    const devicesResponse: any = {};
+    const devicesResponse: {
+      [key: string]: {online: boolean; status: string; errorCode?: string};
+    } = {};
 
     queryDevices.forEach(queryDevice => {
       const queryDeviceId = queryDevice.id;
-      devicesResponse[queryDeviceId] = {};
-      const localDevice = dummyDevices.find(
+
+      const localDevice = dummyDevicesList.find(
         dummyDevice => dummyDevice.id === queryDeviceId
       );
       if (localDevice === undefined) {
@@ -56,8 +58,8 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
         devicesResponse[queryDeviceId].errorCode = 'DeviceIDnotFound';
       } else {
         devicesResponse[queryDeviceId] = JSON.parse(
-          JSON.stringify(localDevice.getCompleteState())
-        ); // FIXME?
+          JSON.stringify(localDevice.state)
+        ); // TODO: check this
         devicesResponse[queryDeviceId].status = 'SUCCESS';
       }
     });
@@ -73,53 +75,44 @@ export class SmartHomeIntentResponses implements ISmartHomeIntentResponses {
     const responsePayload: SmartHomeV1ExecutePayload = {commands: []};
 
     request.commands.forEach(command => {
-      const foundDevices: ISmartHomeDeviceGeneric[] = [];
+      const foundDevicesIds: string[] = [];
       const missingDevicesIds: string[] = [];
 
       command.devices.forEach(device => {
         const reqId = device.id;
-        const localDevice = dummyDevices.find(
+        const localDevice = dummyDevicesList.find(
           dummyDevice => dummyDevice.id === reqId
         );
 
+        // Check if the device exists
         if (localDevice === undefined) {
           missingDevicesIds.push(reqId);
         } else {
-          foundDevices.push(localDevice);
+          foundDevicesIds.push(reqId);
         }
       });
+
       // Add missing devices to commands response
       responsePayload.commands.push({
         ids: missingDevicesIds,
         status: 'ERROR',
         errorCode: 'DeviceIDnotFound',
       });
-      // Let's assume everything goes OK for now
+
+      // Add found devices to commands response
       responsePayload.commands.push({
         ids: [],
-        status: 'SUCCESS',
+        status: 'SUCCESS', // TODO: let's assume that requests for found devices will not give problems for now
       });
 
       const executions = command.execution;
 
-      foundDevices.forEach(device => {
+      foundDevicesIds.forEach(id => {
         executions.forEach(execution => {
-          // FIXME: check this...
-          if (device.setState) {
-            // Let's assume everything goes OK for now
-            /*
-            const newState = device.setState(execution);
-            if (Object.keys(newState).length > 0) { // If it's OK
-              // FIXME
-            }
-            */
-
-            // Don't return back the new state for now
-            device.setState(execution);
-          }
+          //TODO: must apply new state here by calling smart home device utils, how?
         });
         responsePayload.commands[responsePayload.commands.length - 1].ids.push(
-          device.id
+          id
         );
       });
     });

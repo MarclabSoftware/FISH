@@ -14,10 +14,10 @@ import {
 } from 'actions-on-google';
 import {gcfunc} from '../func/gcfunc.decorator';
 import {BaseHttpController, httpPost} from 'inversify-express-utils';
-import {SmartHomeIntentResponses} from './smarthome-intent-responses';
+import {SmartHomeIntentResponses} from './smart-home-intent-responses';
 
 @gcfunc('google-smarthome')
-export class GoogleSmarthomeFunc extends BaseHttpController {
+export class GoogleSmartHomeFunc extends BaseHttpController {
   constructor() {
     super();
   }
