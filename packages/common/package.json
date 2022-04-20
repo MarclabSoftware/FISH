@@ -8,9 +8,9 @@
     "inversify": "^6.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.10.0",
+    "eslint": "^7.0.0",
     "gts": "^3.1.0",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.3"
   },
   "engines": {
     "node": ">=16",
@@ -31,7 +31,8 @@
   "repository": "git@github.com:MarclabSoftware/FISH.git",
   "scripts": {
     "compile": "tsc",
-    "fix": "gts fix",
-    "husky:precommit": "yarn run fix"
+    "fix": "eslint --fix **/*.ts **/*.js **/*.tsx **/*.jsx --no-error-on-unmatched-pattern",
+    "husky:precommit": "yarn fix",
+    "lint": "eslint **/*.ts **/*.js **/*.tsx **/*.jsx --no-error-on-unmatched-pattern"
   }
 }

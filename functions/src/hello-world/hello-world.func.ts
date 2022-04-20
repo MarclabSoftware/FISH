@@ -14,6 +14,8 @@ export class HelloWorldFunc extends BaseHttpController {
 
   @httpGet('/')
   private index() {
-    return this.json({msg: this.helloWorldService.getGreeting('FISH')});
+    return this.json({
+      msg: this.helloWorldService.getGreeting('FISH'),
+    });
   }
 }

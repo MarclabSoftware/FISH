@@ -17,7 +17,7 @@ import {BaseHttpController, httpPost} from 'inversify-express-utils';
 import {SmartHomeIntentResponses} from './smart-home-intent-responses';
 
 @gcfunc('google-smarthome')
-export class GoogleSmartHomeFunc extends BaseHttpController {
+export class GoogleSmarthomeFunc extends BaseHttpController {
   constructor() {
     super();
   }
