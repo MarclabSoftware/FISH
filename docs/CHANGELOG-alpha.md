@@ -1,3 +1,11 @@
+# [1.0.0-alpha.5](https://github.com/MarclabSoftware/FISH/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2022-04-20)
+
+
+### Features
+
+* **func:** Add Auth0 integration for login. ([535d1b8](https://github.com/MarclabSoftware/FISH/commit/535d1b8431207c66e4b143ba17694c30a7607d7f))
+* **func:** Optimize GCF file size on GCloud. ([ce873bf](https://github.com/MarclabSoftware/FISH/commit/ce873bf10e07b8a2ca2a0f4e2986bf8a9edefc33))
+
 # [1.0.0-alpha.4](https://github.com/MarclabSoftware/FISH/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-03-22)
 
 
