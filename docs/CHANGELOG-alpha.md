@@ -1,3 +1,10 @@
+# [0.1.0-alpha.2](https://github.com/MarclabSoftware/FISH/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2022-08-04)
+
+
+### Features
+
+* **func:** Add API to handle devices. ([79274f0](https://github.com/MarclabSoftware/FISH/commit/79274f03c652074365a7434ee51da85f1a32fa67))
+
 # [0.1.0-alpha.1](https://github.com/MarclabSoftware/FISH/compare/v0.0.0...v0.1.0-alpha.1) (2022-06-20)
 
 
