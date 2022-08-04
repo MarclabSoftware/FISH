@@ -1,6 +1,6 @@
 // Google Smart Home Error codes
 // https://developers.google.com/assistant/smarthome/reference/errors-exceptions#exception_list
-export type SmartHomeExeptionCode =
+export type FishDeviceExceptionCode =
   | 'bagFull'
   | 'binFull'
   | 'carbonMonoxideDetected'

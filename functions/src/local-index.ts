@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import './fakeauth/fakeauth.gcf';
 import './hello-world/hello-world.gcf';
 import './smarthome/google-smarthome.gcf';
+import './devices/devices.gcf';
 
 import {HttpFunction} from '@google-cloud/functions-framework';
 import {registeredGCFs} from './func/utils';

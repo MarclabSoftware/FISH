@@ -1,6 +1,6 @@
 // Google Smart Home Error codes
 // https://developers.google.com/assistant/smarthome/reference/errors-exceptions#error_list
-export type SmartHomeErrorCode =
+export type FishDeviceErrorCode =
   | 'aboveMaximumLightEffectsDuration'
   | 'aboveMaximumTimerDuration'
   | 'actionNotAvailable'

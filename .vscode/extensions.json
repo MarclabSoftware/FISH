@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "bierner.github-markdown-preview",
-    "davidanson.vscode-markdownlint"
+    "davidanson.vscode-markdownlint",
+    "rangav.vscode-thunder-client"
   ]
 }

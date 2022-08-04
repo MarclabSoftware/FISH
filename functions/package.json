@@ -5,6 +5,7 @@
   "author": "Marclab Software",
   "bugs": "https://github.com/MarclabSoftware/FISH/issues",
   "dependencies": {
+    "@google-cloud/datastore": "^6.6.2",
     "@google-cloud/functions-framework": "^2.1.1",
     "actions-on-google": "^3.0.0",
     "body-parser": "^1.19.2",
@@ -12,11 +13,14 @@
     "express": "^4.17.3",
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
+    "lodash": "^4.17.21",
     "oidc-provider": "^7.10.6",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^14.18.11",
     "@types/oidc-provider": "^7.8.2",
     "concurrently": "^7.0.0",
@@ -29,7 +33,9 @@
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "ts-node": "^10.7.0",
+    "ts-transformer-keys": "^0.4.3",
     "tsc-watch": "^4.6.1",
+    "ttypescript": "^1.5.13",
     "typescript": "^4.6.3"
   },
   "engines": {
@@ -53,19 +59,23 @@
     "clean": "gts clean",
     "compile": "run-s compile:tsc compile:tsc-alias",
     "compile:package-json": "node ./scripts/build-package-json.js",
-    "compile:tsc": "tsc",
+    "compile:tsc": "ttsc",
     "compile:tsc-alias": "npx tsc-alias",
     "deploy": "run-s deploy:func:*",
-    "deploy:func-env": "cross-var dotenv -e envs/local.env -e envs/dev.env -- gcloud functions deploy $FUNC_NAME --allow-unauthenticated --region=europe-west1 --entry-point GCF --source=build --runtime nodejs16 --trigger-http",
+    "deploy:func-env": "cross-var dotenv -e ../envs/local.env -e ../envs/dev.env -- gcloud functions deploy $FUNC_NAME --allow-unauthenticated --region=europe-west1 --entry-point GCF --source=build --runtime nodejs16 --trigger-http",
     "deploy:func:hello-world": "cross-env FUNC_NAME=hello-world cross-var run-s compile:package-json deploy:func-env",
+    "firestore:browse": "dotenv -e ../envs/local.env -e ../envs/dev.env -- npx google-cloud-gui --port 9000",
+    "firestore:start": "gcloud beta emulators datastore start",
     "fix": "eslint --fix **/*.ts **/*.js **/*.tsx **/*.jsx --no-error-on-unmatched-pattern",
     "husky:precommit": "yarn fix",
     "lint": "eslint **/*.ts **/*.js **/*.tsx **/*.jsx --no-error-on-unmatched-pattern",
-    "start": "npx --node-options=\"--inspect\" functions-framework --source=build/app/functions/src/local-index.js --target=localIndex",
-    "tunnel": "dotenv -e envs/local.env -e envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNCTIONS_TUNNEL_SUBDOM",
-    "watch": "concurrently --kill-others -n watch: -c \"bgBlue.bold,bgRed.bold,bgGreen.bold\" \"yarn:watch:*\"",
-    "watch:compile": "tsc-watch --onSuccess \"yarn compile\"",
-    "watch:start": "nodemon --watch ./build/ --delay 2 --exec yarn start",
-    "watch:tunnel": "nodemon --watch ./build/ --delay 2 --exec yarn tunnel"
+    "start": "cross-var dotenv -e ../envs/local.env -e ../envs/dev.env -- npx --node-options=\"--inspect\" functions-framework --source=build/app/functions/src/local-index.js --target=localIndex",
+    "start:from-watch": "run-s compile:tsc-alias start",
+    "tunnel": "dotenv -e ../envs/local.env -e ../envs/dev.env -- cross-var lt -p 8080 -s $FISH_FUNCTIONS_TUNNEL_SUBDOM",
+    "watch": "concurrently --kill-others -n watch: -c \"bgBlue.bold,bgRed.bold,bgGreen.bold,bgMagenta.bold\" \"yarn:watch:*\"",
+    "watch:compile": "ttsc --watch",
+    "watch:firestore:browse": "yarn firestore:browse",
+    "watch:firestore:start": "yarn firestore:start",
+    "watch:start": "nodemon --watch ./build/ --delay 2 --exec yarn start:from-watch"
   }
 }

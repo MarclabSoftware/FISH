@@ -1,0 +1,346 @@
+[
+  {
+    "_id": "a211f177-4536-4911-b053-941386dc0296",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "6b0233b7-cd65-4853-8ce6-20c41cef1498",
+    "name": "Auth - Get access token",
+    "url": "{{AUTH_baseUrl}}/oauth/token",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-06-21T09:14:04.948Z",
+    "modified": "2022-08-04T17:17:55.644Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "text/plain"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "formencoded",
+      "raw": "",
+      "form": [
+        {
+          "name": "grant_type",
+          "value": "password"
+        },
+        {
+          "name": "client_id",
+          "value": "{{AUTH_clientId}}"
+        },
+        {
+          "name": "client_secret",
+          "value": "{{AUTH_clientSecret}}"
+        },
+        {
+          "name": "username",
+          "value": "test@marclab.com"
+        },
+        {
+          "name": "password",
+          "value": "test1234!"
+        },
+        {
+          "name": "audience",
+          "value": "msh-api"
+        },
+        {
+          "name": "scope",
+          "value": "openid profile email offline_access"
+        }
+      ]
+    },
+    "auth": {
+      "type": "none"
+    },
+    "tests": []
+  },
+  {
+    "_id": "d7213a09-35cd-4452-a7d1-7f5631173d48",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "6b0233b7-cd65-4853-8ce6-20c41cef1498",
+    "name": "(1/2) Auth - Get access token (browser)",
+    "url": "{{AUTH_baseUrl}}/authorize?client_id={{AUTH_clientId}}&response_type=code&connection=google-oauth2&prompt=login&scope=openid profile email offline_access&audience=msh-api&redirect_uri=https://localhost:3000",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-06-21T09:14:04.949Z",
+    "modified": "2022-06-21T09:14:04.949Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "text/plain"
+      }
+    ],
+    "params": [
+      {
+        "name": "client_id",
+        "value": "{{AUTH_clientId}}"
+      },
+      {
+        "name": "response_type",
+        "value": "code"
+      },
+      {
+        "name": "connection",
+        "value": "google-oauth2"
+      },
+      {
+        "name": "prompt",
+        "value": "login"
+      },
+      {
+        "name": "scope",
+        "value": "openid profile email offline_access"
+      },
+      {
+        "name": "audience",
+        "value": "msh-api"
+      },
+      {
+        "name": "redirect_uri",
+        "value": "https://localhost:3000"
+      }
+    ],
+    "auth": {
+      "type": "none"
+    }
+  },
+  {
+    "_id": "53aa9141-1181-484f-a243-830579c627c3",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "6b0233b7-cd65-4853-8ce6-20c41cef1498",
+    "name": "(2/2) Auth - Get access token (code)",
+    "url": "{{AUTH_baseUrl}}/oauth/token",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2022-06-21T09:14:04.950Z",
+    "modified": "2022-06-21T09:14:04.950Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "text/plain"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "grant_type",
+          "value": "authorization_code"
+        },
+        {
+          "name": "client_id",
+          "value": "{{AUTH_clientId}}"
+        },
+        {
+          "name": "client_secret",
+          "value": "{{AUTH_clientSecret}}"
+        },
+        {
+          "name": "code",
+          "value": "m9uyGVztTnW0X3-u"
+        },
+        {
+          "name": "audience",
+          "value": "msh-api"
+        },
+        {
+          "name": "scope",
+          "value": "openid profile email offline_access"
+        },
+        {
+          "name": "redirect_uri",
+          "value": "https://localhost:3000"
+        }
+      ],
+      "type": "formencoded"
+    },
+    "auth": {
+      "type": "none"
+    }
+  },
+  {
+    "_id": "600cbcb8-d510-4540-a6ed-843460bd13ae",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "6b0233b7-cd65-4853-8ce6-20c41cef1498",
+    "name": "Auth - User info",
+    "url": "{{AUTH_baseUrl}}/userinfo",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-06-21T09:14:04.951Z",
+    "modified": "2022-06-21T09:14:04.951Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": ""
+    }
+  },
+  {
+    "_id": "df82a3bc-0c38-497f-b6c7-362e11c77e3f",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
+    "name": "Smarthome intent - SYNC",
+    "url": "{{FUNC_baseUrl}}/google-smarthome",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2022-06-21T09:14:04.952Z",
+    "modified": "2022-06-21T09:14:32.236Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n  \"inputs\": [{\n    \"intent\": \"action.devices.SYNC\"\n  }]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "1f534fd4-b263-4a1c-8466-617a9066bf5c",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
+    "name": "Smarthome intent - QUERY",
+    "url": "{{DISP_baseUrl}}/api/google-home/smarthome",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2022-06-21T09:14:04.953Z",
+    "modified": "2022-06-21T09:14:04.953Z",
+    "headers": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [{\r\n    \"intent\": \"action.devices.QUERY\",\r\n    \"payload\": {\r\n      \"devices\": [{\r\n        \"id\": \"{{_deviceCompositeId}}\"\r\n      }]\r\n    }\r\n  }]\r\n}"
+    }
+  },
+  {
+    "_id": "a1388d5d-b73f-4969-8914-1385c3bdeabd",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
+    "name": "Smarthome intent - EXECUTE",
+    "url": "{{DISP_baseUrl}}/api/google-home/smarthome",
+    "method": "POST",
+    "sortNum": 70000,
+    "created": "2022-06-21T09:14:04.954Z",
+    "modified": "2022-06-21T09:14:04.954Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n    \"inputs\": [\n        {\n            \"intent\": \"action.devices.EXECUTE\",\n            \"payload\": {\n                \"commands\": [\n                    {\n                        \"devices\": [\n                            {\n                                \"id\": \"{{_deviceCompositeId}}\"\n                            }\n                        ],\n                        \"execution\": [\n                            {\n                                \"command\": \"action.devices.commands.OnOff\",\n                                \"params\": {\n                                    \"on\": true\n                                }\n                            }\n                        ]\n                    }\n                ]\n            }\n        }\n    ]\n}"
+    }
+  },
+  {
+    "_id": "3852325e-22b8-4990-883d-f3e1c69cd02f",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
+    "name": "Request sync",
+    "url": "{{DISP_baseUrl}}/api/google-home/requestsync",
+    "method": "POST",
+    "sortNum": 80000,
+    "created": "2022-06-21T09:14:04.955Z",
+    "modified": "2022-06-21T09:14:04.955Z",
+    "headers": []
+  },
+  {
+    "_id": "b72e267e-4305-46ba-a44b-3b2fc428719b",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
+    "name": "Report state",
+    "url": "{{DISP_baseUrl}}/api/google-home/reportState",
+    "method": "PATCH",
+    "sortNum": 90000,
+    "created": "2022-06-21T09:14:04.956Z",
+    "modified": "2022-06-21T09:14:04.956Z",
+    "headers": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"deviceIds\": [\n        {\n            \"deviceId\": \"{{_deviceId}}\",\n            \"nodeId\": \"{{_nodeId}}\"\n        }\n    ]\n}"
+    }
+  },
+  {
+    "_id": "ca8ef027-6bef-4939-96ab-c461b0db5125",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
+    "name": "Add new device",
+    "url": "{{FUNC_baseUrl}}/devices",
+    "method": "POST",
+    "sortNum": 100000,
+    "created": "2022-06-21T09:15:50.393Z",
+    "modified": "2022-06-21T10:47:25.441Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"definition\": {\n    \"type\": \"action.devices.types.OUTLET\",\n    \"traits\": [\n      \"action.devices.traits.OnOff\"\n    ],\n    \"name\": {\n      \"defaultNames\": [],\n      \"name\": \"Dummy FISH outlet 1\",\n      \"nicknames\": []\n    },\n    \"willReportState\": true\n  },\n  \"attributes\": {},\n  \"state\": {\n    \"on\": true\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "646752d8-d069-473b-9ebd-08e9aa9c91d6",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
+    "name": "Get device by id",
+    "url": "{{FUNC_baseUrl}}/devices/aa1b2ab8-a42f-4a80-9272-0f3261fe9781",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2022-06-21T09:22:32.951Z",
+    "modified": "2022-08-04T17:18:36.022Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "22113176-2d05-489d-b671-fd476a97b037",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
+    "name": "Get device list",
+    "url": "{{FUNC_baseUrl}}/devices",
+    "method": "GET",
+    "sortNum": 25000,
+    "created": "2022-06-21T09:45:53.951Z",
+    "modified": "2022-06-21T09:46:09.668Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b9e7f2cd-1954-4fdc-bbae-56e65ed4bacd",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
+    "name": "Delete device",
+    "url": "{{FUNC_baseUrl}}/devices/611cb51f-ee8a-4d07-bf83-8bf0a148c520",
+    "method": "DELETE",
+    "sortNum": 110000,
+    "created": "2022-06-21T10:26:30.144Z",
+    "modified": "2022-06-21T10:49:50.040Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "5b7751b2-f926-4a39-8e35-9302ce4909cd",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
+    "name": "Update device",
+    "url": "{{FUNC_baseUrl}}/devices/aa1b2ab8-a42f-4a80-9272-0f3261fe9781",
+    "method": "PATCH",
+    "sortNum": 105000,
+    "created": "2022-06-21T10:50:10.875Z",
+    "modified": "2022-06-21T10:53:27.247Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"state\": {\n    \"on\": false\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

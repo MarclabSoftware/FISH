@@ -1,0 +1,31 @@
+[
+  {
+    "_id": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "colName": "MarcLab FISH",
+    "created": "2022-06-21T09:14:04.944Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "6b0233b7-cd65-4853-8ce6-20c41cef1498",
+        "name": "Auth",
+        "containerId": "",
+        "created": "2022-06-21T09:14:04.946Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
+        "name": "Google Home",
+        "containerId": "",
+        "created": "2022-06-21T09:14:04.947Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "fb062211-b141-462f-8ce2-2580647fafaa",
+        "name": "Devices",
+        "containerId": "",
+        "created": "2022-06-21T09:15:44.522Z",
+        "sortNum": 30000
+      }
+    ]
+  }
+]

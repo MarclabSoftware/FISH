@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "c54f648e-57fb-4038-999f-e2a70785dac2",
+    "name": "Dev",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2022-06-21T09:15:00.078Z",
+    "modified": "2022-06-21T09:15:22.017Z",
+    "data": [
+      {
+        "name": "FUNC_baseUrl",
+        "value": "http://localhost:8080"
+      }
+    ]
+  }
+]
