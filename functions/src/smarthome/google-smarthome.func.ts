@@ -1,31 +1,33 @@
 import {
   SmartHomeV1SyncResponse,
   SmartHomeV1SyncRequest,
-  Headers,
   SmartHomeV1Request,
   SmartHomeV1Response,
   SmartHomeV1QueryRequest,
-  SmartHomeV1SyncRequestInputs,
   SmartHomeV1QueryResponse,
   SmartHomeV1ExecuteRequest,
   SmartHomeV1ExecuteResponse,
-  SmartHomeV1DisconnectRequest,
-  SmartHomeV1DisconnectResponse,
+  SmartHomeV1SyncDevices,
 } from 'actions-on-google';
 import {gcfunc} from '../func/gcfunc.decorator';
 import {BaseHttpController, httpPost} from 'inversify-express-utils';
 import {SmartHomeIntentResponses} from './smart-home-intent-responses';
+import {inject} from 'inversify';
+import {DI_TYPES} from '../di/types';
+import {IDeviceService} from '../devices/i-device.service';
 
 @gcfunc('google-smarthome')
 export class GoogleSmarthomeFunc extends BaseHttpController {
-  constructor() {
+  constructor(
+    @inject(DI_TYPES.DeviceService) private deviceService: IDeviceService
+  ) {
     super();
   }
 
   responses = new SmartHomeIntentResponses();
 
   @httpPost('/')
-  private index() {
+  private async index() {
     const reqBody = this.httpContext.request.body as SmartHomeV1Request;
 
     if (reqBody.inputs.length !== 1) {
@@ -39,7 +41,7 @@ export class GoogleSmarthomeFunc extends BaseHttpController {
 
     switch (input.intent) {
       case 'action.devices.SYNC':
-        resp = this.onSync(reqBody as SmartHomeV1SyncRequest);
+        resp = await this.onSync(reqBody as SmartHomeV1SyncRequest);
         break;
       case 'action.devices.QUERY':
         resp = this.onQuery(reqBody as SmartHomeV1QueryRequest);
@@ -60,11 +62,24 @@ export class GoogleSmarthomeFunc extends BaseHttpController {
     return this.httpContext.response.json(resp);
   }
 
-  private onSync(body: SmartHomeV1SyncRequest): SmartHomeV1SyncResponse {
-    const resp = {
+  private async onSync(
+    body: SmartHomeV1SyncRequest
+  ): Promise<SmartHomeV1SyncResponse> {
+    const devices = await this.deviceService.getUserDevices('');
+    const smartHomeDevices = devices.map(x => {
+      const y = x.definition as SmartHomeV1SyncDevices;
+      y.id = x.id;
+      y.attributes = x.attributes;
+      return y;
+    });
+
+    const resp = <SmartHomeV1SyncResponse>{
       requestId: body.requestId,
-      payload: this.responses.getSyncPayload(),
-    } as SmartHomeV1SyncResponse;
+      payload: {
+        agentUserId: 'FIXME_AGENT_USER_ID', // FIXME: Use proper agent user id
+        devices: smartHomeDevices,
+      },
+    };
 
     return resp;
   }

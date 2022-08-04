@@ -4,6 +4,12 @@ FISH - Free Integration for Smart Homes by Marclab Software
 
 ## Guide / How to
 
+### Prerequisites
+
+- Install GCloud CLI
+- Install GCloud Datastore emulator ([link](https://cloud.google.com/datastore/docs/tools/datastore-emulator))
+- Useful tool to browse Datastore emulator [here](https://github.com/sanshirookazaki/datastore-gui)
+
 ### Set environment variables
 
 You can use your shell or you can use a `local.env` file inside the `envs` folder.

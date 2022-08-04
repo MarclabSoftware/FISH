@@ -9,6 +9,7 @@
       "request": "attach",
       "name": "Debug GCF",
       "port": 9229,
+      "restart": true,
       "outFiles": [
         "${workspaceFolder}/functions/build/**/*.js",
         "!**/node_modules/**"
