@@ -1,34 +1,21 @@
-import {InversifyExpressServer, interfaces} from 'inversify-express-utils';
-import * as bodyParser from 'body-parser';
-import {createIoC} from '../di/setup';
-import {Application} from 'express';
-import {GCF_NAME_ANNOTATION} from './gcfunc.decorator';
+import bodyParser from 'body-parser';
+import express, {Application, Router} from 'express';
+import {GCF} from './gcf';
 
-const registeredGCFs: {[key: string]: Application} = {};
+export function createGCF(gcfName: string, router: Router): GCF {
+  const app = express();
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    })
+  );
+  app.use(bodyParser.json());
+  const prefixRouter = Router();
+  prefixRouter.use(`/${gcfName}`, router);
+  app.use(prefixRouter);
 
-export function createGCF<T extends interfaces.Controller>(
-  ctr: new (...args: never[]) => T
-): Application {
-  const ioc = createIoC();
-  ioc.bind<T>(Symbol.for(ctr.name)).to(ctr);
-
-  const server = new InversifyExpressServer(ioc);
-  server.setConfig(app => {
-    app.use(
-      bodyParser.urlencoded({
-        extended: true,
-      })
-    );
-    app.use(bodyParser.json());
-  });
-
-  const app = server.build();
-  const gcfName = Reflect.getMetadata(GCF_NAME_ANNOTATION, ctr);
-  Reflect.metadata(GCF_NAME_ANNOTATION, gcfName)(app);
-
-  registeredGCFs[gcfName] = app;
-
-  return app;
+  return <GCF>{
+    name: gcfName,
+    handler: app,
+  };
 }
-
-export {registeredGCFs};

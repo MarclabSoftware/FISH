@@ -1,4 +1,3 @@
-import 'reflect-metadata';
-import {GCF} from './smarthome/google-smarthome.gcf';
+import gcf from './smarthome/google-smarthome.func.js';
 
-export {GCF};
+export default gcf.handler;

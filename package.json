@@ -30,6 +30,9 @@
   "license": "GPL-3.0-or-later",
   "private": true,
   "repository": "MarclabSoftware/FISH.git",
+  "resolutions": {
+    "@types/express-serve-static-core": "^4.17.21"
+  },
   "scripts": {
     "cli": "ts-node scripts/cli",
     "husky:precommit": "yarn run syncpack:format && yarn workspaces run husky:precommit",
@@ -37,6 +40,7 @@
     "preinstall:all": "npx only-allow yarn",
     "prepare": "husky install",
     "run:comm": "yarn workspace @marclabsoftware/fish-common",
+    "run:firebase": "yarn workspace @marclabsoftware/fish-firebase",
     "run:func": "yarn workspace @marclabsoftware/fish-functions",
     "syncpack": "syncpack list-mismatches",
     "syncpack:fix": "syncpack fix-mismatches",
@@ -44,6 +48,7 @@
   },
   "workspaces": [
     "packages/*",
-    "functions"
+    "functions",
+    "firebase"
   ]
 }

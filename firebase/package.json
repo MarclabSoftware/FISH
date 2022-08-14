@@ -1,0 +1,20 @@
+{
+  "name": "@marclabsoftware/fish-firebase",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "engines": {
+    "node": ">= 16"
+  },
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "emulators:start": "firebase emulators:start",
+    "husky:precommit": "echo Nothing to do."
+  },
+  "dependencies": {
+    "firebase": "^9.9.2",
+    "firebase-admin": "^11.0.1",
+    "push-receiver": "^2.1.1"
+  }
+}

@@ -5,8 +5,7 @@
   "author": "Marclab Software",
   "bugs": "https://github.com/MarclabSoftware/FISH/issues",
   "dependencies": {
-    "actions-on-google": "^3.0.0",
-    "inversify": "^6.0.1"
+    "actions-on-google": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^7.0.0",

@@ -1,108 +1,86 @@
 import {
   SmartHomeV1SyncResponse,
-  SmartHomeV1SyncRequest,
-  SmartHomeV1Request,
-  SmartHomeV1Response,
-  SmartHomeV1QueryRequest,
   SmartHomeV1QueryResponse,
-  SmartHomeV1ExecuteRequest,
   SmartHomeV1ExecuteResponse,
   SmartHomeV1SyncDevices,
+  smarthome,
+  SmartHomeV1DisconnectResponse,
 } from 'actions-on-google';
-import {gcfunc} from '../func/gcfunc.decorator';
-import {BaseHttpController, httpPost} from 'inversify-express-utils';
-import {SmartHomeIntentResponses} from './smart-home-intent-responses';
-import {inject} from 'inversify';
-import {DI_TYPES} from '../di/types';
-import {IDeviceService} from '../devices/i-device.service';
+import {Router} from 'express';
 
-@gcfunc('google-smarthome')
-export class GoogleSmarthomeFunc extends BaseHttpController {
-  constructor(
-    @inject(DI_TYPES.DeviceService) private deviceService: IDeviceService
-  ) {
-    super();
-  }
+import {createGCF} from '../func/utils.js';
+import {DeviceService} from '../devices/device.service.js';
+import {FishDevice} from '../devices/fish-device.js';
+import {ApiClientObjectMap} from 'actions-on-google/dist/common.js';
 
-  responses = new SmartHomeIntentResponses();
+const deviceService = new DeviceService();
+const router = Router();
 
-  @httpPost('/')
-  private async index() {
-    const reqBody = this.httpContext.request.body as SmartHomeV1Request;
+const smarthomeHandler = smarthome({});
 
-    if (reqBody.inputs.length !== 1) {
-      const msg = `Provided ${reqBody.inputs.length} intents in a single request, expected only 1.`;
-      console.error(msg);
-      return this.badRequest(msg);
-    }
+smarthomeHandler.onSync(async body => {
+  const devices = await deviceService.getList();
+  const smartHomeDevices = devices.map(x => {
+    const y = x.definition as SmartHomeV1SyncDevices;
+    y.id = x.id;
+    y.attributes = x.attributes;
+    return y;
+  });
 
-    let resp: SmartHomeV1Response = {};
-    const input = reqBody.inputs[0];
+  const resp = <SmartHomeV1SyncResponse>{
+    requestId: body.requestId,
+    payload: {
+      agentUserId: 'FIXME_AGENT_USER_ID', // FIXME: Use proper agent user id
+      devices: smartHomeDevices,
+    },
+  };
 
-    switch (input.intent) {
-      case 'action.devices.SYNC':
-        resp = await this.onSync(reqBody as SmartHomeV1SyncRequest);
-        break;
-      case 'action.devices.QUERY':
-        resp = this.onQuery(reqBody as SmartHomeV1QueryRequest);
-        break;
-      case 'action.devices.EXECUTE':
-        resp = this.onExecute(reqBody as SmartHomeV1ExecuteRequest);
-        break;
-      case 'action.devices.DISCONNECT':
-        this.onDisconnect();
-        // This doesn't need response
-        break;
-      default:
-        throw new Error('unsupported intent');
-    }
-    if (Object.keys(resp).length === 0) {
-      return;
-    }
-    return this.httpContext.response.json(resp);
-  }
+  return resp;
+});
 
-  private async onSync(
-    body: SmartHomeV1SyncRequest
-  ): Promise<SmartHomeV1SyncResponse> {
-    const devices = await this.deviceService.getUserDevices('');
-    const smartHomeDevices = devices.map(x => {
-      const y = x.definition as SmartHomeV1SyncDevices;
-      y.id = x.id;
-      y.attributes = x.attributes;
-      return y;
-    });
+smarthomeHandler.onQuery(async body => {
+  const {devices: queryDevices} = body.inputs[0].payload;
+  const devicesPromises = queryDevices.map(async x => {
+    return await deviceService.getById(x.id);
+  });
+  const devicesRes = await Promise.all(devicesPromises);
 
-    const resp = <SmartHomeV1SyncResponse>{
-      requestId: body.requestId,
-      payload: {
-        agentUserId: 'FIXME_AGENT_USER_ID', // FIXME: Use proper agent user id
-        devices: smartHomeDevices,
-      },
-    };
+  // FIXME: Handle errors properly
+  const devices = <FishDevice[]>devicesRes.filter(x => x);
 
-    return resp;
-  }
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const stateMap: ApiClientObjectMap<any> = devices
+    .filter(x => x)
+    .reduce((obj, x) => {
+      obj[x.id] = {...x.state, status: 'SUCCESS'};
+      return obj;
+    }, {} as ApiClientObjectMap<any>);
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
-  private onQuery(body: SmartHomeV1QueryRequest): SmartHomeV1QueryResponse {
-    const resp = {
-      requestId: body.requestId,
-      payload: this.responses.getQueryPayload(body.inputs[0].payload),
-    } as SmartHomeV1QueryResponse;
+  const resp = {
+    requestId: body.requestId,
+    payload: {
+      devices: stateMap,
+    },
+  } as SmartHomeV1QueryResponse;
 
-    return resp;
-  }
+  return resp;
+});
 
-  private onExecute(
-    body: SmartHomeV1ExecuteRequest
-  ): SmartHomeV1ExecuteResponse {
-    const resp = {
-      requestId: body.requestId,
-      payload: this.responses.getExecutePayload(body.inputs[0].payload),
-    } as SmartHomeV1ExecuteResponse;
+smarthomeHandler.onExecute(async body => {
+  const resp = {
+    requestId: body.requestId,
+    payload: {}, // FIXME: Implement
+  } as SmartHomeV1ExecuteResponse;
 
-    return resp;
-  }
+  return resp;
+});
 
-  private onDisconnect() {}
-}
+smarthomeHandler.onDisconnect(async () => {
+  const resp = {} as SmartHomeV1DisconnectResponse;
+  return resp;
+});
+
+router.post('/', smarthomeHandler);
+
+export default createGCF('google-smarthome', router);
