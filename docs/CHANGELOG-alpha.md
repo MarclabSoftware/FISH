@@ -1,3 +1,10 @@
+# [0.1.0-alpha.3](https://github.com/MarclabSoftware/FISH/compare/v0.1.0-alpha.2...v0.1.0-alpha.3) (2022-08-17)
+
+
+### Features
+
+* **func:** Add Firestore persistence layer and minimal smarthome implementation. ([60d5eb7](https://github.com/MarclabSoftware/FISH/commit/60d5eb77a12a41090cccf2628f330a556cd76c4a))
+
 # [0.1.0-alpha.2](https://github.com/MarclabSoftware/FISH/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2022-08-04)
 
 
