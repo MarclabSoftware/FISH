@@ -36,7 +36,7 @@ config.plugins.push([
   },
 ]);
 
-if (branch != 'alpha') {
+if (branch !== 'alpha') {
   config.plugins.push('@semantic-release/github');
 }
 

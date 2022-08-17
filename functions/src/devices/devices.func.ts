@@ -1,76 +1,66 @@
-import {gcfunc} from '../func/gcfunc.decorator';
-import {
-  BaseHttpController,
-  httpDelete,
-  httpGet,
-  httpPatch,
-  httpPost,
-} from 'inversify-express-utils';
-import {inject} from 'inversify';
-import {DI_TYPES} from '../di/types';
-import {IDeviceService} from '../devices/i-device.service';
-import {FishDevice} from './fish-device';
-import {assign} from 'lodash';
+import {assign} from 'lodash-es';
+import {Router} from 'express';
 
-@gcfunc('devices')
-export class DevicesFunc extends BaseHttpController {
-  constructor(
-    @inject(DI_TYPES.DeviceService) private deviceService: IDeviceService
-  ) {
-    super();
-  }
+import {DeviceService} from '../devices/device.service.js';
+import {FishDevice} from './fish-device.js';
+import {createGCF} from '../func/utils.js';
 
-  @httpPost('/')
-  public async addNewDevice() {
-    const reqBody = this.httpContext.request.body as FishDevice;
-    const objToSave = reqBody as FishDevice;
-    const savedObj = await this.deviceService.save(objToSave, true);
-    return this.httpContext.response.json(savedObj);
-  }
-
-  @httpGet('/')
-  public async getDeviceList() {
-    const deviceList = await this.deviceService.getList();
-    return this.httpContext.response.json(deviceList);
-  }
-
-  @httpGet('/:deviceId')
-  public async getDeviceById() {
-    const deviceId = this.httpContext.request.params['deviceId'] as string;
-    const objFromDb = await this.deviceService.getById(deviceId);
-    if (!objFromDb) {
-      this.httpContext.response.status(404);
-      return this.httpContext.response.json({message: 'Device not found'});
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      device?: FishDevice;
     }
-
-    return this.httpContext.response.json(objFromDb);
-  }
-
-  @httpPatch('/:deviceId')
-  public async updateDevice() {
-    const reqBody = this.httpContext.request.body as Partial<FishDevice>;
-    const deviceId = this.httpContext.request.params['deviceId'] as string;
-    const objFromDb = await this.deviceService.getById(deviceId);
-    if (!objFromDb) {
-      this.httpContext.response.status(404);
-      return this.httpContext.response.json({message: 'Device not found'});
-    }
-
-    assign(objFromDb, reqBody);
-    const objUpdated = await this.deviceService.save(objFromDb, false);
-
-    return this.httpContext.response.json(objUpdated);
-  }
-
-  @httpDelete('/:deviceId')
-  public async deleteById() {
-    const deviceId = this.httpContext.request.params['deviceId'] as string;
-    const isDeleted = await this.deviceService.deleteById(deviceId);
-    if (!isDeleted) {
-      this.httpContext.response.status(404);
-      return this.httpContext.response.json({message: 'Device not found'});
-    }
-
-    return this.httpContext.response.json({});
   }
 }
+
+const deviceService = new DeviceService();
+const router = Router();
+
+// preload device on routes with ':deviceId'
+router.param('deviceId', async (req, res, next, deviceId: string) => {
+  const dev = await deviceService.getById(deviceId);
+  if (!dev) {
+    res.status(404);
+    return res.json({message: 'Device not found'});
+  }
+
+  req.device = dev;
+  return next();
+});
+
+// add new device
+router.post('/', async (req, res) => {
+  const reqBody = req.body as FishDevice;
+  const objToSave = reqBody as FishDevice;
+  const savedObj = await deviceService.create(objToSave);
+  res.status(201);
+  return res.json(savedObj);
+});
+
+// get devices
+router.get('/', async (_, res) => {
+  const deviceList = await deviceService.getList();
+  return res.json(deviceList);
+});
+
+// get device by id
+router.get('/:deviceId', async (req, res) => {
+  return res.json(req.device);
+});
+
+// update device
+router.patch('/:deviceId', async (req, res) => {
+  const reqBody = req.body as Partial<FishDevice>;
+  const toSave = assign(req.device, reqBody);
+  const objUpdated = await deviceService.update(toSave);
+  return res.json(objUpdated);
+});
+
+// delete device
+router.delete('/:deviceId', async (req, res) => {
+  await deviceService.deleteById(req.device!.id);
+  return res.sendStatus(204);
+});
+
+export default createGCF('devices', router);

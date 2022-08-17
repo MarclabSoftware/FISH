@@ -1,0 +1,1 @@
+regione geografica: us-east1

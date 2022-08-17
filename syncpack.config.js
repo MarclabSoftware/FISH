@@ -17,6 +17,11 @@ module.exports = {
     'scripts',
   ],
   sortFirst: ['name', 'description', 'version', 'author'],
-  source: ['package.json', 'functions/package.json', 'packages/*/package.json'],
+  source: [
+    'package.json',
+    'firebase/package.json',
+    'functions/package.json',
+    'packages/*/package.json',
+  ],
   versionGroups: [],
 };

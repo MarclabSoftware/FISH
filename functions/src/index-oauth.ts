@@ -1,4 +1,3 @@
-import 'reflect-metadata';
-import {GCF} from './fakeauth/fakeauth.gcf';
+import gcf from './fakeauth/fakeauth.func.js';
 
-export {GCF};
+export default gcf.handler;

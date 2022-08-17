@@ -2,7 +2,8 @@
   "extends": "../tsconfig.common.json",
   "compilerOptions": {
     "plugins": [{"transform": "ts-transformer-keys/transformer"}],
-    "outDir": "build/app"
+    "outDir": "build/app",
+    "esModuleInterop": true
   },
   "include": ["src/**/*.ts"]
 }

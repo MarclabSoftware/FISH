@@ -8,10 +8,10 @@
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "husky": "^7.0.0",
-    "semantic-release": "^19.0.2",
-    "syncpack": "^6.2.0",
-    "tsc-alias": "^1.6.4"
+    "husky": "^8.0.1",
+    "semantic-release": "^19.0.3",
+    "syncpack": "^8.2.4",
+    "tsc-alias": "^1.7.0"
   },
   "engines": {
     "node": ">=16",
@@ -30,13 +30,19 @@
   "license": "GPL-3.0-or-later",
   "private": true,
   "repository": "MarclabSoftware/FISH.git",
+  "resolutions": {
+    "@types/express-serve-static-core": "^4.17.21"
+  },
   "scripts": {
     "cli": "ts-node scripts/cli",
-    "husky:precommit": "yarn run syncpack:format && yarn workspaces run husky:precommit",
+    "fix": "yarn fix:specific ./*.js",
+    "fix:specific": "eslint --no-error-on-unmatched-pattern --fix",
+    "husky:precommit": "lint-staged && yarn workspaces run husky:precommit",
     "preinstall": "npx only-allow yarn",
     "preinstall:all": "npx only-allow yarn",
     "prepare": "husky install",
     "run:comm": "yarn workspace @marclabsoftware/fish-common",
+    "run:firebase": "yarn workspace @marclabsoftware/fish-firebase",
     "run:func": "yarn workspace @marclabsoftware/fish-functions",
     "syncpack": "syncpack list-mismatches",
     "syncpack:fix": "syncpack fix-mismatches",
@@ -44,6 +50,7 @@
   },
   "workspaces": [
     "packages/*",
-    "functions"
+    "functions",
+    "firebase"
   ]
 }

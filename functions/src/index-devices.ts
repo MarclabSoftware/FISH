@@ -1,4 +1,3 @@
-import 'reflect-metadata';
-import {GCF} from './devices/devices.gcf';
+import gcf from './devices/devices.func.js';
 
-export {GCF};
+export default gcf.handler;

@@ -203,37 +203,43 @@
     "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
     "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
     "name": "Smarthome intent - QUERY",
-    "url": "{{DISP_baseUrl}}/api/google-home/smarthome",
+    "url": "{{FUNC_baseUrl}}/google-smarthome",
     "method": "POST",
     "sortNum": 60000,
     "created": "2022-06-21T09:14:04.953Z",
-    "modified": "2022-06-21T09:14:04.953Z",
+    "modified": "2022-08-12T14:00:11.426Z",
     "headers": [],
+    "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [{\r\n    \"intent\": \"action.devices.QUERY\",\r\n    \"payload\": {\r\n      \"devices\": [{\r\n        \"id\": \"{{_deviceCompositeId}}\"\r\n      }]\r\n    }\r\n  }]\r\n}"
-    }
+      "raw": "{\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n  \"inputs\": [{\n    \"intent\": \"action.devices.QUERY\",\n    \"payload\": {\n      \"devices\": [{\n        \"id\": \"71a593d6-c842-4b4e-a5af-144f5d6292e4\"\n      }]\n    }\n  }]\n}",
+      "form": []
+    },
+    "tests": []
   },
   {
     "_id": "a1388d5d-b73f-4969-8914-1385c3bdeabd",
     "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
     "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
     "name": "Smarthome intent - EXECUTE",
-    "url": "{{DISP_baseUrl}}/api/google-home/smarthome",
+    "url": "{{FUNC_baseUrl}}/google-smarthome",
     "method": "POST",
     "sortNum": 70000,
     "created": "2022-06-21T09:14:04.954Z",
-    "modified": "2022-06-21T09:14:04.954Z",
+    "modified": "2022-08-17T09:00:07.437Z",
     "headers": [
       {
         "name": "Content-Type",
         "value": "application/json"
       }
     ],
+    "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n    \"inputs\": [\n        {\n            \"intent\": \"action.devices.EXECUTE\",\n            \"payload\": {\n                \"commands\": [\n                    {\n                        \"devices\": [\n                            {\n                                \"id\": \"{{_deviceCompositeId}}\"\n                            }\n                        ],\n                        \"execution\": [\n                            {\n                                \"command\": \"action.devices.commands.OnOff\",\n                                \"params\": {\n                                    \"on\": true\n                                }\n                            }\n                        ]\n                    }\n                ]\n            }\n        }\n    ]\n}"
-    }
+      "raw": "{\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n  \"inputs\": [\n    {\n      \"intent\": \"action.devices.EXECUTE\",\n      \"payload\": {\n        \"commands\": [\n          {\n            \"devices\": [\n              {\n                \"id\": \"5d5668f1-fe45-46d1-af5d-f654ff8730a7\"\n              }\n            ],\n            \"execution\": [\n              {\n                \"command\": \"action.devices.commands.OnOff\",\n                \"params\": {\n                  \"on\": true\n                }\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+      "form": []
+    },
+    "tests": []
   },
   {
     "_id": "3852325e-22b8-4990-883d-f3e1c69cd02f",
@@ -287,11 +293,11 @@
     "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
     "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
     "name": "Get device by id",
-    "url": "{{FUNC_baseUrl}}/devices/aa1b2ab8-a42f-4a80-9272-0f3261fe9781",
+    "url": "{{FUNC_baseUrl}}/devices/92cc51b3-9fbb-4714-9d40-f43d611ec59e",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-06-21T09:22:32.951Z",
-    "modified": "2022-08-04T17:18:36.022Z",
+    "modified": "2022-08-12T10:36:16.370Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -315,11 +321,11 @@
     "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
     "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
     "name": "Delete device",
-    "url": "{{FUNC_baseUrl}}/devices/611cb51f-ee8a-4d07-bf83-8bf0a148c520",
+    "url": "{{FUNC_baseUrl}}/devices/92cc51b3-9fbb-4714-9d40-f43d611ec59e",
     "method": "DELETE",
     "sortNum": 110000,
     "created": "2022-06-21T10:26:30.144Z",
-    "modified": "2022-06-21T10:49:50.040Z",
+    "modified": "2022-08-12T10:36:27.539Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -329,11 +335,11 @@
     "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
     "containerId": "fb062211-b141-462f-8ce2-2580647fafaa",
     "name": "Update device",
-    "url": "{{FUNC_baseUrl}}/devices/aa1b2ab8-a42f-4a80-9272-0f3261fe9781",
+    "url": "{{FUNC_baseUrl}}/devices/92cc51b3-9fbb-4714-9d40-f43d611ec59e",
     "method": "PATCH",
     "sortNum": 105000,
     "created": "2022-06-21T10:50:10.875Z",
-    "modified": "2022-06-21T10:53:27.247Z",
+    "modified": "2022-08-12T10:36:20.401Z",
     "headers": [],
     "params": [],
     "body": {
@@ -341,6 +347,20 @@
       "raw": "{\n  \"state\": {\n    \"on\": false\n  }\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "427a3502-6b5f-4537-a205-6f9df9ced016",
+    "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
+    "containerId": "",
+    "name": "Get version",
+    "url": "{{FUNC_baseUrl}}/version",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2022-08-11T09:58:22.889Z",
+    "modified": "2022-08-12T08:01:29.514Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

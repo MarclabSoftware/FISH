@@ -5,8 +5,7 @@
   "author": "Marclab Software",
   "bugs": "https://github.com/MarclabSoftware/FISH/issues",
   "dependencies": {
-    "actions-on-google": "^3.0.0",
-    "inversify": "^6.0.1"
+    "actions-on-google": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^7.0.0",
@@ -32,8 +31,9 @@
   "repository": "git@github.com:MarclabSoftware/FISH.git",
   "scripts": {
     "compile": "tsc",
-    "fix": "eslint --fix **/*.ts **/*.js **/*.tsx **/*.jsx --no-error-on-unmatched-pattern",
-    "husky:precommit": "yarn fix",
+    "fix": "yarn fix:specific **/*.ts **/*.js **/*.tsx **/*.jsx",
+    "fix:specific": "eslint --no-error-on-unmatched-pattern --fix",
+    "husky:precommit": "lint-staged",
     "lint": "eslint **/*.ts **/*.js **/*.tsx **/*.jsx --no-error-on-unmatched-pattern"
   }
 }

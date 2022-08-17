@@ -1,0 +1,3 @@
+{
+  "*.{ts,js,tsx,jsx}": "yarn fix:specific "
+}
