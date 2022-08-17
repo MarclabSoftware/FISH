@@ -5,6 +5,7 @@ import {
   SmartHomeV1SyncDevices,
   smarthome,
   SmartHomeV1DisconnectResponse,
+  SmartHomeV1ExecuteResponseCommands,
 } from 'actions-on-google';
 import {Router} from 'express';
 
@@ -68,9 +69,37 @@ smarthomeHandler.onQuery(async body => {
 });
 
 smarthomeHandler.onExecute(async body => {
+  const commRespones: SmartHomeV1ExecuteResponseCommands[] = [];
+
+  // FIXME: For now we take only the first element of each array, is this ok?
+  const {devices, execution: executions} = body.inputs[0].payload.commands[0];
+  const execution = executions[0];
+
+  const tasks: Promise<FishDevice>[] = [];
+  for (const device of devices) {
+    const devUpdate: Partial<FishDevice> = {
+      id: device.id,
+      state: execution.params,
+    };
+    tasks.push(deviceService.update(devUpdate));
+  }
+
+  const updates = await Promise.all(tasks);
+  for (const devUpdated of updates) {
+    commRespones.push({
+      ids: [devUpdated.id],
+      status: 'SUCCESS',
+      states: devUpdated.state,
+    });
+  }
+
+  // FIXME: Handle report state
+
   const resp = {
     requestId: body.requestId,
-    payload: {}, // FIXME: Implement
+    payload: {
+      commands: commRespones,
+    },
   } as SmartHomeV1ExecuteResponse;
 
   return resp;

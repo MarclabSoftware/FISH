@@ -222,21 +222,24 @@
     "colId": "32d4d786-3354-427d-8780-71ab13fa69ce",
     "containerId": "ac60d7b7-6a54-4a61-bf77-077a8e8375a1",
     "name": "Smarthome intent - EXECUTE",
-    "url": "{{DISP_baseUrl}}/api/google-home/smarthome",
+    "url": "{{FUNC_baseUrl}}/google-smarthome",
     "method": "POST",
     "sortNum": 70000,
     "created": "2022-06-21T09:14:04.954Z",
-    "modified": "2022-06-21T09:14:04.954Z",
+    "modified": "2022-08-17T09:00:07.437Z",
     "headers": [
       {
         "name": "Content-Type",
         "value": "application/json"
       }
     ],
+    "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n    \"inputs\": [\n        {\n            \"intent\": \"action.devices.EXECUTE\",\n            \"payload\": {\n                \"commands\": [\n                    {\n                        \"devices\": [\n                            {\n                                \"id\": \"{{_deviceCompositeId}}\"\n                            }\n                        ],\n                        \"execution\": [\n                            {\n                                \"command\": \"action.devices.commands.OnOff\",\n                                \"params\": {\n                                    \"on\": true\n                                }\n                            }\n                        ]\n                    }\n                ]\n            }\n        }\n    ]\n}"
-    }
+      "raw": "{\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n  \"inputs\": [\n    {\n      \"intent\": \"action.devices.EXECUTE\",\n      \"payload\": {\n        \"commands\": [\n          {\n            \"devices\": [\n              {\n                \"id\": \"5d5668f1-fe45-46d1-af5d-f654ff8730a7\"\n              }\n            ],\n            \"execution\": [\n              {\n                \"command\": \"action.devices.commands.OnOff\",\n                \"params\": {\n                  \"on\": true\n                }\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+      "form": []
+    },
+    "tests": []
   },
   {
     "_id": "3852325e-22b8-4990-883d-f3e1c69cd02f",
